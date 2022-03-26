@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 22:56:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/26 22:59:24 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 00:25:56 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,26 @@ t_piece	*new_piece(void)
 		return (NULL);
 	ft_bzero(piece, sizeof (t_piece));
 	return (piece);
+}
+
+char	**new_string_array(int rows, int cols)
+{
+	char	**array;
+	char	*str;
+	size_t	size;
+	int		i;
+
+	size = (rows + 1) * sizeof (char *) + rows * (cols + 1) * sizeof (char);
+	array = (char **) malloc(size);
+	if (!array)
+		return (NULL);
+	ft_bzero(array, size);
+	str = (char *)(array + rows + 1);
+	i = 0;
+	while (i < rows)
+	{
+		array[i] = str + i * (cols + 1);
+		i++;
+	}
+	return (array);
 }

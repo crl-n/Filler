@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 10:12:58 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/26 23:18:15 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 00:40:31 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	get_map_info(t_info *info)
 	int		i;
 	char	*line;
 
+	skip_line();
 	line = NULL;
 	i = 0;
 	while (i < info->nrows)
@@ -73,7 +74,8 @@ void	get_map_info(t_info *info)
 		gnl_ret = get_next_line(0, &line);
 		if (gnl_ret < 1)
 			break ;
-		printf("MAP LINE: %s\n", line);
+		ft_strcpy(info->map[i], ft_strstr(line, " ") + 1);
+		printf("MAP LINE: %s\n", info->map[i]);
 		ft_strdel(&line);
 		i++;
 	}
@@ -89,10 +91,12 @@ void	get_piece_info(t_piece *piece)
 	gnl_ret = get_next_line(0, &line);
 	if (gnl_ret < 1)
 		return ;
+	free_string_array(piece->data, piece->rows, piece->cols);
 	printf("PIECE DIMENSIONS %s\n", line);
 	piece->rows = ft_atoi(ft_strchr(line, ' ') + 1);
 	piece->cols = ft_atoi(ft_strrchr(line, ' ') + 1);
 	ft_strdel(&line);
+	piece->data = new_string_array(piece->rows, piece->cols);
 	i = 0;
 	while (i < piece->rows)
 	{
@@ -100,44 +104,10 @@ void	get_piece_info(t_piece *piece)
 		if (gnl_ret < 1)
 			break ;
 		printf("PIECE LINE: %s\n", line);
+		ft_strncpy(piece->data[i], line, piece->cols);
+		printf("PIECE LINE (DATA): %s\n", piece->data[i]);
 		ft_strdel(&line);
 		i++;
-	}
-}
-
-void	skip_line(void)
-{
-	int		gnl_ret;
-	char	*line;
-
-	line = NULL;
-	gnl_ret = get_next_line(0, &line);
-	if (gnl_ret < 1)
-		return ;
-	printf("SKIPPED: %s\n", line);
-	ft_strdel(&line);
-}
-
-void	skip_opponent_info(t_info *info)
-{
-	int		gnl_ret;
-	char	*line;
-
-	(void) info;
-	line = NULL;
-	while (1)
-	{
-		gnl_ret = get_next_line(0, &line);
-		if (gnl_ret < 1)
-			break ;
-		if (ft_strstr(line, "got"))
-		{
-			printf("STOPPED AT: %s\n", line);
-			ft_strdel(&line);
-			break ;
-		}
-		printf("SKIPPED: %s\n", line);
-		ft_strdel(&line);
 	}
 }
 
@@ -155,6 +125,7 @@ int	main(void)
 	if (info->player == 1)
 		skip_opponent_info(info);
 	get_map_dimensions(info);
+	info->map = new_string_array(info->nrows, info->ncols);
 	while (1)
 	{
 		get_map_info(info);
