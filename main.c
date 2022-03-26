@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 10:12:58 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 00:40:31 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 01:40:39 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,33 @@ void	get_piece_info(t_piece *piece)
 	}
 }
 
+t_pos	*find_in_map(t_info *info, char c)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < info->nrows)
+	{
+		x = 0;
+		while (x < info->ncols)
+		{
+			if (info->map[y][x] == c)
+				return (new_pos(x, y));
+		}
+		y++;
+	}
+	return (NULL);
+}
+
+void	think(t_info *info, t_piece *piece)
+{
+	(void) piece;
+	if (!info->prev)
+		info->prev = find_in_map(info, player_symbol_lower(info->player));
+	printf("%d %d\n", info->prev->x + 1, info->prev->y + 1);
+}
+
 int	main(void)
 {
 	t_info	*info;
@@ -130,6 +157,8 @@ int	main(void)
 	{
 		get_map_info(info);
 		get_piece_info(piece);
+		think(info, piece);
+		//output_command(info);
 		skip_opponent_info(info);
 		break ;
 	}

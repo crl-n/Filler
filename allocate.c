@@ -6,13 +6,25 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 22:56:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 00:25:56 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 01:38:48 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
 #include <stdlib.h>
+
+t_pos	*new_pos(int x, int y)
+{
+	t_pos	*pos;
+
+	pos = (t_pos *) malloc(sizeof (t_pos));
+	if (!pos)
+		return (NULL);
+	pos->x = x;
+	pos->y = y;
+	return (pos);
+}
 
 t_info	*new_info(void)
 {

@@ -6,12 +6,13 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:39:39 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 00:40:50 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 01:36:01 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
+#include "get_next_line.h"
 #include <stdio.h>
 
 void	skip_line(void)
