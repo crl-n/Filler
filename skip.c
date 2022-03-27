@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:39:39 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 01:36:01 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 12:28:06 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-void	skip_line(void)
+void	skip_line(t_info *info)
 {
 	int		gnl_ret;
 	char	*line;
@@ -24,7 +24,7 @@ void	skip_line(void)
 	gnl_ret = get_next_line(0, &line);
 	if (gnl_ret < 1)
 		return ;
-	printf("SKIPPED: %s\n", line);
+	dprintf(info->fd, "SKIPPED: %s\n", line);
 	ft_strdel(&line);
 }
 
@@ -42,11 +42,11 @@ void	skip_opponent_info(t_info *info)
 			break ;
 		if (ft_strstr(line, "got"))
 		{
-			printf("STOPPED AT: %s\n", line);
+			dprintf(info->fd, "STOPPED AT: %s\n", line);
 			ft_strdel(&line);
 			break ;
 		}
-		printf("SKIPPED: %s\n", line);
+		dprintf(info->fd, "SKIPPED: %s\n", line);
 		ft_strdel(&line);
 	}
 }

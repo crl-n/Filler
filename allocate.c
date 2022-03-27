@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 22:56:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 01:38:48 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 12:13:30 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,26 @@ char	**new_string_array(int rows, int cols)
 		i++;
 	}
 	return (array);
+}
+
+double	**new_heatmap(int rows, int cols)
+{
+	double	**heatmap;
+	double	*cell;
+	size_t	size;
+	int		i;
+
+	size = (rows + 1) * sizeof (double *) + rows * (cols) * sizeof (double);
+	heatmap = (double **) malloc(size);
+	if (!heatmap)
+		return (NULL);
+	ft_bzero(heatmap, size);
+	cell = (double *)(heatmap + rows + 1);
+	i = 0;
+	while (i < rows)
+	{
+		heatmap[i] = cell + i * (cols);
+		i++;
+	}
+	return (heatmap);
 }
