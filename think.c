@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:31:03 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 21:17:07 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 21:42:43 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	can_place_piece(int x, int y, t_info *info, t_piece *piece)
 		j = 0;
 		while (j < piece->cols)
 		{
-			dprintf(info->fd, "CHECKING: y %d x %d\n", y, x);
+			//dprintf(info->fd, "CHECKING: y %d x %d\n", y, x);
 			if (x >= info->ncols)
 				break ;
 			if (is_player(info->map[y][x], info->player) && piece->data[i][j] == '*')
@@ -44,11 +44,13 @@ int	can_place_piece(int x, int y, t_info *info, t_piece *piece)
 		y++;
 		i++;
 	}
-	if (overlap)
+	if (overlap == 1)
+	{
 		dprintf(info->fd, "* PIECE CAN BE PLACED overlap: %d\n", overlap);
-	else
-		dprintf(info->fd, "PIECE CAN NOT BE PLACED\n");
-	return (overlap);
+		return (1);
+	}
+	dprintf(info->fd, "PIECE CAN NOT BE PLACED\n");
+	return (0);
 }
 
 // Attempts to find placement near pos using a sprial search pattern.
@@ -91,6 +93,8 @@ void	think(t_info *info, t_piece *piece)
 	(void) piece;
 	if (!info->prev)
 		info->prev = find_in_map(info, player_symbol(info->player));
+	else
+		info->prev = find_in_map(info, player_symbol_lower(info->player));
 	pos = find_placement_near(info->center, info, piece);
 	dprintf(info->fd, "FOUND PLACEMENT y: %d x: %d\n", pos->y, pos->x);
 	info->cmd->y = pos->y;

@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 10:12:58 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 20:22:28 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 21:37:31 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,10 @@ int	main(void)
 		get_map_info(info);
 		get_piece_info(piece, info);
 		think(info, piece);
-		send_command(info);
+		skip_line(info);
+		//skip_line(info);
+		//send_command(info);
 		//skip_opponent_info(info);
-		break ;
 	}
 	return (0);
 }

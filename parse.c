@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 11:55:30 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 16:51:42 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 21:36:06 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	get_piece_info(t_piece *piece, t_info *info)
 	if (gnl_ret < 1)
 		return ;
 	free_string_array(piece->data, piece->rows, piece->cols);
+	piece->data = NULL;
 	dprintf(info->fd, "PIECE DIMENSIONS %s\n", line);
 	piece->rows = ft_atoi(ft_strchr(line, ' ') + 1);
 	piece->cols = ft_atoi(ft_strrchr(line, ' ') + 1);
