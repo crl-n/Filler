@@ -2,7 +2,7 @@
 
 NAME = cnysten.filler
 
-SRC = main.c allocate.c cleanup.c parse.c skip.c symbol.c
+SRC = main.c allocate.c cleanup.c command.c parse.c skip.c symbol.c think.c
 
 OBJ = $(SRC:%.c=%.o)
 

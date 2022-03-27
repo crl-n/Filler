@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 10:12:58 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 12:27:39 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 13:30:56 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,23 @@ t_pos	*find_in_map(t_info *info, char c)
 	int	y;
 
 	y = 0;
+	dprintf(info->fd, "FINDING %c IN MAP\n", c);
 	while (y < info->nrows)
 	{
 		x = 0;
 		while (x < info->ncols)
 		{
 			if (info->map[y][x] == c)
+			{
+				dprintf(info->fd, "FOUND %c AT Y: %d X: %d\n", c, y, x);
 				return (new_pos(x, y));
+			}
+			x++;
 		}
 		y++;
 	}
+	dprintf(info->fd, "EXITING FIND_IN_MAP\n");
 	return (NULL);
-}
-
-void	think(t_info *info, t_piece *piece)
-{
-	(void) piece;
-	if (!info->prev)
-		info->prev = find_in_map(info, player_symbol_lower(info->player));
-	printf("%d %d\n", info->prev->x + 1, info->prev->y + 1);
 }
 
 int	main(void)
@@ -65,7 +63,7 @@ int	main(void)
 		get_map_info(info);
 		get_piece_info(piece, info);
 		think(info, piece);
-		//output_command(info);
+		send_command(info);
 		skip_opponent_info(info);
 		break ;
 	}

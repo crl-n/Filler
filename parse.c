@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 11:55:30 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 12:27:14 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 12:35:24 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,5 @@ void	get_piece_info(t_piece *piece, t_info *info)
 		ft_strdel(&line);
 		i++;
 	}
+	dprintf(info->fd, "EXITING GET_PIECE_INFO\n");
 }

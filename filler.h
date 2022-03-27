@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 12:27:28 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 13:32:38 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_info
 	int		ncols;
 	char	**map;
 	double	**heat;
-	char	*command;
+	t_pos	*cmd;
 	t_pos	*prev;
 }	t_info;
 
@@ -38,6 +38,7 @@ typedef struct s_piece
 	char	**data;
 }	t_piece;
 
+t_pos	*find_in_map(t_info *info, char c);
 void	free_heatmap(char **heatmap, int rows, int cols);
 void	free_string_array(char **array, int rows, int cols);
 void	get_player_number(t_info *info);
@@ -51,7 +52,9 @@ t_pos	*new_pos(int x, int y);
 char	**new_string_array(int rows, int cols);
 char	player_symbol_lower(int player);
 char	player_symbol(int player);
+void	send_command(t_info *info);
 void	skip_line(t_info *info);
 void	skip_opponent_info(t_info *info);
+void	think(t_info *info, t_piece *piece);
 
 #endif
