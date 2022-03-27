@@ -6,12 +6,24 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 13:32:38 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 17:32:10 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
+
+typedef enum e_dir
+{
+	n,
+	ne,
+	e,
+	se,
+	s,
+	sw,
+	w,
+	nw,
+} t_dir;
 
 typedef	struct s_pos
 {
@@ -28,6 +40,7 @@ typedef struct s_info
 	char	**map;
 	double	**heat;
 	t_pos	*cmd;
+	t_pos	*center;
 	t_pos	*prev;
 }	t_info;
 
@@ -38,6 +51,7 @@ typedef struct s_piece
 	char	**data;
 }	t_piece;
 
+int		can_place_piece(int x, int y, t_info *info, t_piece *piece);
 t_pos	*find_in_map(t_info *info, char c);
 void	free_heatmap(char **heatmap, int rows, int cols);
 void	free_string_array(char **array, int rows, int cols);
@@ -45,6 +59,7 @@ void	get_player_number(t_info *info);
 void	get_map_dimensions(t_info *info);
 void	get_map_info(t_info *info);
 void	get_piece_info(t_piece *piece, t_info *info);
+int		is_player(char c, int player);
 double	**new_heatmap(int rows, int cols);
 t_info	*new_info(void);
 t_piece	*new_piece(void);

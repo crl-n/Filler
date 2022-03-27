@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 01:31:28 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 01:31:38 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 17:36:59 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,3 +24,11 @@ char	player_symbol(int player)
 	return ('X');
 }
 
+int	is_player(char c, int player)
+{
+	if (c == player_symbol(player))
+		return (1);
+	if (c == player_symbol_lower(player))
+		return (1);
+	return (0);
+}

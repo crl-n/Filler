@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 11:55:30 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 12:35:24 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/03/27 16:51:42 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ void	get_map_dimensions(t_info *info)
 		return ;
 	info->nrows = ft_atoi(ft_strchr(line, ' ') + 1);
 	info->ncols = ft_atoi(ft_strrchr(line, ' ') + 1);
+	info->center = new_pos((info->nrows - 1) / 2, (info->ncols - 1) / 2);
 	dprintf(info->fd, "GOT NROWS %d\n", info->nrows);
 	dprintf(info->fd, "GOT NCOLS %d\n", info->ncols);
+	dprintf(info->fd, "GOT CENTER %d %d\n", info->center->y, info->center->x);
 	ft_strdel(&line);
 }
 
