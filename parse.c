@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 11:55:30 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 21:36:06 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/04/06 13:47:07 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	get_player_number(t_info *info)
 		{
 			info->player = ft_atoi(ft_strchr(line, 'p') + 1);
 			dprintf(info->fd, "GOT PLAYER NUMBER %d\n", info->player);
+			info->opponent = (info->player == 1) + 1;
+			dprintf(info->fd, "GOT OPPONENT NUMBER %d\n", info->opponent);
 			player_known = 1;
 		}
 		ft_strdel(&line);

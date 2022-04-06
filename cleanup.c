@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 17:30:17 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/04/06 11:59:37 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	free_string_array(char **array, int rows, int cols)
 
 // Note: This function expects a 2D array of doubles allocated
 // with a single malloc.
-void	free_heatmap(char **heatmap, int rows, int cols)
+void	free_heatmap(unsigned int **heatmap, int rows, int cols)
 {
 	size_t	size;
 
 	if (!heatmap)
 		return ;
-	size = (rows + 1) * sizeof (double *) + rows * (cols) * sizeof (double);
+	size = (rows + 1) * sizeof (unsigned int *) + rows * (cols) * sizeof (unsigned int);
 	ft_bzero(heatmap, size);
 	free(heatmap);
 }
