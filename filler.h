@@ -6,14 +6,15 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/06 14:13:46 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/06 14:47:03 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
 
-# define MAX_HEAT 1000.0
+# define MAX_HEAT 10000
+# define MAX_HEATSUM 4294967295
 
 typedef enum e_dir
 {
