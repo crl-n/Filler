@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:31:03 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/06 14:47:42 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/08 10:59:51 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	can_place_piece(int x, int y, t_info *info, t_piece *piece)
 	int	j;
 	int	overlap;
 
-	dprintf(info->fd, "CHECKING IF PIECE CAN BE PLACED y: %d x: %d\n", y, x);
-	dprintf(info->fd, "PLAYER SYMBOLS: %c %c\n", player_symbol(info->player), player_symbol_lower(info->player));
+	//dprintf(info->fd, "CHECKING IF PIECE CAN BE PLACED y: %d x: %d\n", y, x);
+	//dprintf(info->fd, "PLAYER SYMBOLS: %c %c\n", player_symbol(info->player), player_symbol_lower(info->player));
 	overlap = 0;
 	i = 0;
 	while (i < piece->rows && y < info->nrows)
@@ -37,6 +37,8 @@ int	can_place_piece(int x, int y, t_info *info, t_piece *piece)
 				break ;
 			if (is_player(info->map[y][x], info->player) && piece->data[i][j] == '*')
 				overlap++;
+			if (is_player(info->map[y][x], info->opponent) && piece->data[i][j] == '*')
+				return (0);
 			x++;
 			j++;
 		}
@@ -49,7 +51,7 @@ int	can_place_piece(int x, int y, t_info *info, t_piece *piece)
 		dprintf(info->fd, "* PIECE CAN BE PLACED overlap: %d\n", overlap);
 		return (1);
 	}
-	dprintf(info->fd, "PIECE CAN NOT BE PLACED\n");
+	//dprintf(info->fd, "PIECE CAN NOT BE PLACED\n");
 	return (0);
 }
 
@@ -139,7 +141,7 @@ void	find_min_heatsum(t_info *info, t_piece *piece, t_pos *minpos)
 				{
 					min_heatsum = heatsum;
 					minpos->x = x;
-					minpos->y = x;
+					minpos->y = y;
 				}
 			}
 			x++;

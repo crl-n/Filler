@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 11:55:30 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/06 13:47:07 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/08 10:55:58 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	get_map_info(t_info *info)
 		if (gnl_ret < 1)
 			break ;
 		ft_strcpy(info->map[i], ft_strstr(line, " ") + 1);
-		dprintf(info->fd, "MAP LINE: %s\n", info->map[i]);
+		dprintf(info->fd, "MAP LINE %3d: %s\n", i, info->map[i]);
 		ft_strdel(&line);
 		i++;
 	}
@@ -102,9 +102,9 @@ void	get_piece_info(t_piece *piece, t_info *info)
 		gnl_ret = get_next_line(0, &line);
 		if (gnl_ret < 1)
 			break ;
-		dprintf(info->fd, "PIECE LINE: %s\n", line);
+		dprintf(info->fd, "PIECE LINE %3d: %s\n", i, line);
 		ft_strncpy(piece->data[i], line, piece->cols);
-		dprintf(info->fd, "PIECE LINE (DATA): %s\n", piece->data[i]);
+		//dprintf(info->fd, "PIECE LINE (DATA): %s\n", piece->data[i]);
 		ft_strdel(&line);
 		i++;
 	}
