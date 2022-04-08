@@ -20,6 +20,9 @@ $(NAME): $(SRC)
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIB) $(INC)
 	cp $(NAME) ../resources_filler/players
 
+test:
+	../resources_filler/filler_vm -p1 ../resources_filler/players/champely.filler -p2 ./cnysten.filler -f ../resources_filler/maps/map00
+
 clean:
 	-@make -C ./libft clean
 	-@/bin/rm $(OBJ)

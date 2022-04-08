@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:31:03 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/08 10:59:51 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/04/08 11:39:07 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ int	can_place_piece(int x, int y, t_info *info, t_piece *piece)
 	//dprintf(info->fd, "PLAYER SYMBOLS: %c %c\n", player_symbol(info->player), player_symbol_lower(info->player));
 	overlap = 0;
 	i = 0;
-	while (i < piece->rows && y < info->nrows)
+	while (i < piece->rows)
 	{
 		if (y >= info->nrows)
-			break ;
+			return (0);
 		j = 0;
 		while (j < piece->cols)
 		{
 			//dprintf(info->fd, "CHECKING: y %d x %d\n", y, x);
 			if (x >= info->ncols)
-				break ;
+				return (0);
 			if (is_player(info->map[y][x], info->player) && piece->data[i][j] == '*')
 				overlap++;
 			if (is_player(info->map[y][x], info->opponent) && piece->data[i][j] == '*')
