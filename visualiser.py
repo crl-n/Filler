@@ -76,6 +76,7 @@ def get_dims():
     cols = int(parts[2])
     return (rows, cols)
 
+# TODO: Optimise get_frames
 def get_frames(rows):
     i = 0
     frames = []
@@ -101,6 +102,12 @@ def get_frames(rows):
         i += 1
     return frames
 
+# TODO: clean up and split into functions
+# TODO: write map dimensions
+# TODO: declare winner, show turn and result
+# TODO: center banner
+# TODO: fade in banner
+# TODO: make speed adjustable (by flag or by keystroke?)
 def main():
     out = sys.stdout
     p1, p2 = get_player_numbers()
