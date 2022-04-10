@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 10:12:58 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/06 14:17:25 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/10 15:58:35 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ int	main(void)
 	if (info->fd < 0)
 		return (0);
 	get_player_number(info);
-	if (info->player == 1)
-		skip_opponent_info(info);
 	get_map_dimensions(info);
 	info->map = new_string_array(info->nrows, info->ncols);
 	info->heatmap = new_heatmap(info->nrows, info->ncols);
@@ -66,9 +64,6 @@ int	main(void)
 		get_piece_info(piece, info);
 		think(info, piece);
 		skip_line(info);
-		//skip_line(info);
-		//send_command(info);
-		//skip_opponent_info(info);
 	}
 	return (0);
 }
