@@ -7,14 +7,19 @@ HIDE_CURSOR = ESC + '[?25l'
 SHOW_CURSOR = ESC + '[?12l' + ESC + '[?25h'
 GOTO_ORIGIN = ESC + '[H'
 NEXTLINE = ESC + '[1E'
-SET_COLOR = ESC + '[38;5;{0}m'
 CLEAR = ESC + '[2J' + GOTO_ORIGIN
 
-RED = 0xe0
-GREEN = 0x1c
-BLUE = 0x3
+# Color-related constants
+FG = ESC + '[38;5;{0}m'
+BG = ESC + '[48;5;{0}m'
+RESET_BG = ESC + '[m'
+P1_COLOR_1 = 27
+P1_COLOR_2 = 20
+EMPTY_TILE_COLOR = 237
+P2_COLOR_1 = 160
+P2_COLOR_2 = 124
 
-BLOCK = SET_COLOR + '⬛︎' 
+BLOCK = FG + '⬛︎' 
 
 banner_thin = ['███ █ █  █  ███ ███',
                '█   █ █  █  █   █ █',
@@ -90,11 +95,11 @@ def get_frames(rows):
             continue
         if i <= rows:
             line = line.split(' ')[1]
-            line = line.replace('.', BLOCK.format(237))
-            line = line.replace('X', BLOCK.format(160))
-            line = line.replace('x', BLOCK.format(124))
-            line = line.replace('O', BLOCK.format(27))
-            line = line.replace('o', BLOCK.format(20))
+            line = line.replace('.', BLOCK.format(EMPTY_TILE_COLOR))
+            line = line.replace('X', BLOCK.format(P2_COLOR_1))
+            line = line.replace('x', BLOCK.format(P2_COLOR_2))
+            line = line.replace('O', BLOCK.format(P1_COLOR_1))
+            line = line.replace('o', BLOCK.format(P1_COLOR_2))
             frame.append(line.rstrip('\n'))
         if i == rows:
             frames.append(frame)
@@ -108,6 +113,7 @@ def get_frames(rows):
 # TODO: center banner
 # TODO: fade in banner
 # TODO: make speed adjustable (by flag or by keystroke?)
+# TODO: compatibility with map02
 def main():
     out = sys.stdout
     p1, p2 = get_player_numbers()
@@ -115,7 +121,7 @@ def main():
     frames = get_frames(rows)
     out.write(HIDE_CURSOR)
     for color in gradient(0, 255, 20):
-        out.write(SET_COLOR.format(color))
+        out.write(FG.format(color))
         for row in banner:
             out.write(row)
             out.write(NEXTLINE)
@@ -124,15 +130,17 @@ def main():
         out.write(CLEAR)
     for frame in frames:
         out.write(CLEAR)
-        out.write(SET_COLOR.format(231))
+        out.write(FG.format(231))
         for row in banner:
             out.write(row)
             out.write(NEXTLINE)
         out.write(NEXTLINE)
-        out.write(NEXTLINE)
+        out.write(BG.format(P1_COLOR_1))
         out.write(p1)
         out.write(NEXTLINE)
+        out.write(BG.format(P2_COLOR_1))
         out.write(p2)
+        out.write(RESET_BG)
         out.write(NEXTLINE)
         out.write(NEXTLINE)
         for line in frame:
