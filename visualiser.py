@@ -14,6 +14,8 @@ RED = 0xe0
 GREEN = 0x1c
 BLUE = 0x3
 
+BLOCK = SET_COLOR + '⬛︎' 
+
 banner_thin = ['███ █ █  █  ███ ███',
                '█   █ █  █  █   █ █',
                '█▅  █ █  █  █▅  ██ ',
@@ -87,7 +89,12 @@ def get_frames(rows):
             continue
         if i <= rows:
             line = line.split(' ')[1]
-            frame.append(line)
+            line = line.replace('.', BLOCK.format(237))
+            line = line.replace('X', BLOCK.format(160))
+            line = line.replace('x', BLOCK.format(124))
+            line = line.replace('O', BLOCK.format(27))
+            line = line.replace('o', BLOCK.format(20))
+            frame.append(line.rstrip('\n'))
         if i == rows:
             frames.append(frame)
             frame = []
@@ -109,18 +116,23 @@ def main():
         sleep(0.01)
         out.write(CLEAR)
     for frame in frames:
+        out.write(CLEAR)
+        out.write(SET_COLOR.format(231))
         for row in banner:
             out.write(row)
             out.write(NEXTLINE)
-        out.write(SET_COLOR.format(231))
+        out.write(NEXTLINE)
+        out.write(NEXTLINE)
+        out.write(p1)
+        out.write(NEXTLINE)
+        out.write(p2)
         out.write(NEXTLINE)
         out.write(NEXTLINE)
         for line in frame:
             out.write(line)
             out.write(NEXTLINE)
         out.flush()
-        sleep(0.1)
-        out.write(CLEAR)
+        sleep(0.035)
     out.write(SHOW_CURSOR)
 
 if __name__ == '__main__':
