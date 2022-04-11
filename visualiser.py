@@ -1,5 +1,6 @@
 # This Python file uses the following encoding: utf-8
 import sys
+import select
 from time import sleep
 
 ESC = '\033'
@@ -151,4 +152,8 @@ def main():
     out.write(SHOW_CURSOR)
 
 if __name__ == '__main__':
-    main()
+    if sys.stdin.isatty():
+        print('Usage: You have to pipe a filler_vm process to this script.')
+        print('E.g. ./filler_vm -p1 ./champely.filler -p2 ./grati.filler -f map00 | py visualiser.py')
+    else:
+        main()
