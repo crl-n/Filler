@@ -1,6 +1,8 @@
 # This Python file uses the following encoding: utf-8
 import sys
-import select
+import os
+import termios
+from select import select
 from time import sleep
 
 ESC = '\033'
@@ -9,6 +11,8 @@ SHOW_CURSOR = ESC + '[?12l' + ESC + '[?25h'
 GOTO_ORIGIN = ESC + '[H'
 NEXTLINE = ESC + '[1E'
 CLEAR = ESC + '[2J' + GOTO_ORIGIN
+BOLD = '\033[1m'
+RESET = '\033[0m'
 
 # Color-related constants
 FG = ESC + '[38;5;{0}m'
@@ -33,6 +37,9 @@ banner = ['████ ██ ██  ██  ████ ████',
           '███  ██ ██  ██  ███  ███▀ ',
           '██   ██ ██  ██  ██   ██ █',
           '██   ██ ███ ███ ████ ██ █']
+
+out = sys.stdout
+speeds = [20.0, 0.75, 0.3, 0.2, 0.15, 0.1, 0.05, 0.04, 0.03, 0.02, 0.005]
 
 def itorgb(i):
     r = (i & 0xe0) >> 5
@@ -108,34 +115,43 @@ def get_frames(rows):
         i += 1
     return frames
 
-# TODO: clean up and split into functions
-# TODO: write map dimensions
-# TODO: declare winner, show turn and result
-# TODO: center banner
-# TODO: fade in banner
-# TODO: make speed adjustable (by flag or by keystroke?)
-# TODO: compatibility with map02
-def main():
-    out = sys.stdout
-    p1, p2 = get_player_numbers()
-    rows, cols = get_dims()
-    frames = get_frames(rows)
-    out.write(HIDE_CURSOR)
-    for color in gradient(0, 255, 20):
-        out.write(FG.format(color))
-        for row in banner:
-            out.write(row)
-            out.write(NEXTLINE)
-        out.flush()
-        sleep(0.01)
-        out.write(CLEAR)
+def print_banner():
+    for row in banner:
+        out.write(row)
+        out.write(NEXTLINE)
+
+def termios_setting_off(setting, fd):
+    settings = termios.tcgetattr(fd)
+    oflags = settings[3]
+    oflags = oflags & ~setting
+    settings[3] = oflags
+    termios.tcsetattr(fd, termios.TCSADRAIN, settings)
+
+def termios_setting_on(setting, fd):
+    settings = termios.tcgetattr(fd)
+    oflags = settings[3]
+    oflags = oflags | setting
+    settings[3] = oflags
+    termios.tcsetattr(fd, termios.TCSADRAIN, settings)
+
+def print_frames(frames, speed, p1, p2):
+    f = open('/dev/tty')
+    fd = f.fileno()
+    termios_setting_off(termios.ICANON, fd)
     for frame in frames:
+        #termios_setting_off(termios.ECHO, fd)
+        if select([f], (), (), 0)[0]:
+            keystroke = f.read(1)
+            if keystroke == 'k' and speed < 10:
+                speed += 1
+            elif keystroke == 'j' and speed > 1:
+                speed -= 1
+        #termios_setting_on(termios.ECHO, fd)
         out.write(CLEAR)
         out.write(FG.format(231))
-        for row in banner:
-            out.write(row)
-            out.write(NEXTLINE)
+        print_banner()
         out.write(NEXTLINE)
+        out.write(BOLD)
         out.write(BG.format(P1_COLOR_1))
         out.write(p1)
         out.write(NEXTLINE)
@@ -143,12 +159,41 @@ def main():
         out.write(p2)
         out.write(RESET_BG)
         out.write(NEXTLINE)
+        out.write(BOLD + 'Speed: {} '.format(speed) + RESET)
         out.write(NEXTLINE)
         for line in frame:
             out.write(line)
             out.write(NEXTLINE)
         out.flush()
-        sleep(0.035)
+        sleep(speeds[speed])
+    termios_setting_on(termios.ICANON, fd)
+
+# TODO: clean up and split into functions
+# TODO: write map dimensions
+# TODO: declare winner, show turn and result
+# TODO: center banner
+# TODO: fade in banner
+# TODO: make speed adjustable (by flag or by keystroke?)
+# TODO: compatibility with map02
+
+
+def main():
+    #width, height = os.get_terminal_size()
+    speed = 6
+    p1, p2 = get_player_numbers()
+    rows, cols = get_dims()
+    frames = get_frames(rows)
+
+    out.write(HIDE_CURSOR)
+    for color in gradient(0, 255, 20):
+        out.write(FG.format(color))
+        print_banner()
+        out.flush()
+        sleep(0.01)
+        out.write(CLEAR)
+
+    print_frames(frames, speed, p1, p2)
+
     out.write(SHOW_CURSOR)
 
 if __name__ == '__main__':
