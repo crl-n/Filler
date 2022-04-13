@@ -6,13 +6,33 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/06 11:59:37 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/13 13:37:40 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
 #include <stdlib.h>
+
+void	die(t_info *info)
+{
+	t_piece	*piece;
+
+	piece = info->piece;
+	if (piece)
+	{
+		free_string_array(piece->data, piece->rows, piece->cols);
+		free(piece);
+	}
+	if (info->map)
+		free_string_array(info->map, info->nrows, info->ncols);
+	free_heatmap(info->heatmap, info->nrows, info->ncols);
+	if (info->cmd)
+		free(info->cmd);
+	if (info)
+		free(info);
+	exit(0);
+}
 
 // Note: This function only expects a string array allocated
 // with a single malloc.
@@ -35,7 +55,8 @@ void	free_heatmap(unsigned int **heatmap, int rows, int cols)
 
 	if (!heatmap)
 		return ;
-	size = (rows + 1) * sizeof (unsigned int *) + rows * (cols) * sizeof (unsigned int);
+	size = (rows + 1) * sizeof (unsigned int *);
+	size += rows * (cols) * sizeof (unsigned int);
 	ft_bzero(heatmap, size);
 	free(heatmap);
 }

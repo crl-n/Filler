@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/06 14:47:03 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/13 13:46:34 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,18 @@
 # define MAX_HEAT 10000
 # define MAX_HEATSUM 4294967295
 
-typedef enum e_dir
-{
-	n,
-	ne,
-	e,
-	se,
-	s,
-	sw,
-	w,
-	nw,
-} t_dir;
-
-typedef	struct s_pos
+typedef struct	s_pos
 {
 	int	x;
 	int	y;
 }	t_pos;
+
+typedef struct s_piece
+{
+	int		cols;
+	int		rows;
+	char	**data;
+}	t_piece;
 
 typedef struct s_info
 {
@@ -43,18 +38,13 @@ typedef struct s_info
 	int				ncols;
 	char			**map;
 	unsigned int	**heatmap;
+	t_piece			*piece;
 	t_pos			*cmd;
 	t_pos			*center;
 	t_pos			*prev;
 }	t_info;
 
-typedef struct s_piece
-{
-	int		cols;
-	int		rows;
-	char	**data;
-}	t_piece;
-
+void			die(t_info *info);
 int				can_place_piece(int x, int y, t_info *info, t_piece *piece);
 t_pos			*find_in_map(t_info *info, char c);
 void			free_heatmap(unsigned int **heatmap, int rows, int cols);
@@ -74,7 +64,7 @@ char			player_symbol(int player);
 void			send_command(t_info *info);
 void			skip_line(t_info *info);
 void			skip_opponent_info(t_info *info);
-void			think(t_info *info, t_piece *piece);
+void			think(t_piece *piece, t_info *info);
 void			update_heatmap(t_info *info);
 void			print_heatmap(t_info *info);
 

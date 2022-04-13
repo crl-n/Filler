@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:53:02 by cnysten           #+#    #+#             */
-/*   Updated: 2022/04/06 14:14:49 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/13 13:45:51 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,32 @@ static int	are_valid_ids(t_info *info, int i, int j)
 	return (1);
 }
 
-static void	update_adjacent_cells(t_info *info, int i, int j, unsigned int current_heat)
+static void	update_adjacent_cells(t_info *info,
+		int i, int j, unsigned int current_heat)
 {
-	if (are_valid_ids(info, i - 1, j) && info->heatmap[i - 1][j] > current_heat + 1)
+	if (are_valid_ids(info, i - 1, j)
+		&& info->heatmap[i - 1][j] > current_heat + 1)
 		info->heatmap[i - 1][j] = current_heat + 1;
-	if (are_valid_ids(info, i - 1, j + 1) && info->heatmap[i - 1][j + 1] > current_heat + 1)
+	if (are_valid_ids(info, i - 1, j + 1)
+		&& info->heatmap[i - 1][j + 1] > current_heat + 1)
 		info->heatmap[i - 1][j + 1] = current_heat + 1;
-	if (are_valid_ids(info, i, j + 1) && info->heatmap[i][j + 1] > current_heat + 1)
+	if (are_valid_ids(info, i, j + 1)
+		&& info->heatmap[i][j + 1] > current_heat + 1)
 		info->heatmap[i][j + 1] = current_heat + 1;
-	if (are_valid_ids(info, i + 1, j + 1) && info->heatmap[i + 1][j + 1] > current_heat + 1)
+	if (are_valid_ids(info, i + 1, j + 1)
+		&& info->heatmap[i + 1][j + 1] > current_heat + 1)
 		info->heatmap[i + 1][j + 1] = current_heat + 1;
-	if (are_valid_ids(info, i + 1, j) && info->heatmap[i + 1][j] > current_heat + 1)
+	if (are_valid_ids(info, i + 1, j)
+		&& info->heatmap[i + 1][j] > current_heat + 1)
 		info->heatmap[i + 1][j] = current_heat + 1;
-	if (are_valid_ids(info, i + 1, j - 1) && info->heatmap[i + 1][j - 1] > current_heat + 1)
+	if (are_valid_ids(info, i + 1, j - 1)
+		&& info->heatmap[i + 1][j - 1] > current_heat + 1)
 		info->heatmap[i + 1][j - 1] = current_heat + 1;
-	if (are_valid_ids(info, i, j - 1) && info->heatmap[i][j - 1] > current_heat + 1)
+	if (are_valid_ids(info, i, j - 1)
+		&& info->heatmap[i][j - 1] > current_heat + 1)
 		info->heatmap[i][j - 1] = current_heat + 1;
-	if (are_valid_ids(info, i - 1, j - 1) && info->heatmap[i - 1][j - 1] > current_heat + 1)
+	if (are_valid_ids(info, i - 1, j - 1)
+		&& info->heatmap[i - 1][j - 1] > current_heat + 1)
 		info->heatmap[i - 1][j - 1] = current_heat + 1;
 }
 

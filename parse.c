@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 11:55:30 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/08 10:55:58 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/04/13 13:48:07 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	get_player_number(t_info *info)
 	{
 		gnl_ret = get_next_line(0, &line);
 		if (gnl_ret < 1)
-			break ;
+			die(info);
 		if (ft_strstr(line, "cnysten.filler"))
 		{
 			info->player = ft_atoi(ft_strchr(line, 'p') + 1);
@@ -48,7 +48,7 @@ void	get_map_dimensions(t_info *info)
 	line = NULL;
 	gnl_ret = get_next_line(0, &line);
 	if (gnl_ret < 1)
-		return ;
+		die(info);
 	info->nrows = ft_atoi(ft_strchr(line, ' ') + 1);
 	info->ncols = ft_atoi(ft_strrchr(line, ' ') + 1);
 	info->center = new_pos((info->nrows - 1) / 2, (info->ncols - 1) / 2);
@@ -88,7 +88,7 @@ void	get_piece_info(t_piece *piece, t_info *info)
 	line = NULL;
 	gnl_ret = get_next_line(0, &line);
 	if (gnl_ret < 1)
-		return ;
+		die(info);
 	free_string_array(piece->data, piece->rows, piece->cols);
 	piece->data = NULL;
 	dprintf(info->fd, "PIECE DIMENSIONS %s\n", line);
@@ -96,15 +96,16 @@ void	get_piece_info(t_piece *piece, t_info *info)
 	piece->cols = ft_atoi(ft_strrchr(line, ' ') + 1);
 	ft_strdel(&line);
 	piece->data = new_string_array(piece->rows, piece->cols);
+	if (!piece->data)
+		die(info);
 	i = 0;
 	while (i < piece->rows)
 	{
 		gnl_ret = get_next_line(0, &line);
 		if (gnl_ret < 1)
-			break ;
+			die(info);
 		dprintf(info->fd, "PIECE LINE %3d: %s\n", i, line);
 		ft_strncpy(piece->data[i], line, piece->cols);
-		//dprintf(info->fd, "PIECE LINE (DATA): %s\n", piece->data[i]);
 		ft_strdel(&line);
 		i++;
 	}

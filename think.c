@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:31:03 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/08 11:39:07 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/04/13 13:04:21 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void	find_min_heatsum(t_info *info, t_piece *piece, t_pos *minpos)
 	dprintf(info->fd, "FOUND MINIMUM HEATSUM %u AT x: %d y: %d\n", min_heatsum, minpos->x, minpos->y);
 }
 
-void	think(t_info *info, t_piece *piece)
+void	think(t_piece *piece, t_info *info)
 {
 	t_pos	pos;
 

@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 22:56:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/06 13:38:00 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/13 13:36:41 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ unsigned int	**new_heatmap(int rows, int cols)
 	size_t			size;
 	int				i;
 
-	size = (rows + 1) * sizeof (unsigned int *) + rows * cols * sizeof (unsigned int);
+	size = (rows + 1) * sizeof (unsigned int *);
+	size += rows * cols * sizeof (unsigned int);
 	heatmap = (unsigned int **) malloc(size);
 	if (!heatmap)
 		return (NULL);
