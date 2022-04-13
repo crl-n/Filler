@@ -1,6 +1,5 @@
 import sys
 import os
-import keyboard
 import time
 from multiprocessing.pool import ThreadPool
 import multiprocessing as mp
@@ -15,7 +14,7 @@ opponents = ['champely.filler',
              'grati.filler',
              'hcao.filler',
              'superjeannot.filler']
-maps = ['map00', 'map01']
+maps = ['map00', 'map01'] # <-- Add map02 here if needed
 resources_path = '../resources_filler' # <-- Modify this to where your local resources_filler directory resides
 filler_vm = '{}/filler_vm'.format(resources_path)
 GAMES_PER_OPPONENT = 1 # <-- The amount of games per opponent-map combination can be configured here
