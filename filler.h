@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 15:25:59 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/13 15:52:31 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_info
 }	t_info;
 
 void			die(t_info *info);
-int				can_place_piece(int x, int y, t_info *info, t_piece *piece);
+int				can_place_piece(t_pos pos, t_info *info, t_piece *piece);
 t_pos			*find_in_map(t_info *info, char c);
 void			free_heatmap(unsigned int **heatmap, int rows, int cols);
 void			free_string_array(char **array, int rows, int cols);
