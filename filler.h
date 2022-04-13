@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 15:52:31 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/13 21:23:46 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,17 @@ typedef struct s_info
 	char			**map;
 	unsigned int	**heatmap;
 	t_piece			*piece;
-	t_pos			*cmd;
 }	t_info;
 
 void			die(t_info *info);
-int				can_place_piece(t_pos pos, t_info *info, t_piece *piece);
-t_pos			*find_in_map(t_info *info, char c);
+int				can_place_piece(t_pos pos,
+					t_info *info, t_piece *piece, int overlap);
 void			free_heatmap(unsigned int **heatmap, int rows, int cols);
 void			free_string_array(char **array, int rows, int cols);
 void			get_player_number(t_info *info);
 void			get_map_dimensions(t_info *info);
 void			get_map_info(t_info *info);
-void			get_piece_info(t_piece *piece, t_info *info);
+void			get_piece_info(t_piece *piece, t_info *info, int i);
 int				is_player(char c, int player);
 unsigned int	**new_heatmap(int rows, int cols);
 t_info			*new_info(void);
@@ -58,11 +57,10 @@ t_pos			*new_pos(int x, int y);
 char			**new_string_array(int rows, int cols);
 char			player_symbol_lower(int player);
 char			player_symbol(int player);
-void			send_command(t_info *info);
+void			send_command(t_pos *pos);
 void			skip_line(t_info *info);
 void			skip_opponent_info(t_info *info);
 void			think(t_piece *piece, t_info *info);
 void			update_heatmap(t_info *info);
-void			print_heatmap(t_info *info);
 
 #endif

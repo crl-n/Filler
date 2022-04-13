@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 11:55:30 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 15:36:35 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/13 21:36:07 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,16 @@ void	get_map_info(t_info *info)
 	{
 		gnl_ret = get_next_line(0, &line);
 		if (gnl_ret < 1)
-			break ;
+			die(info);
 		ft_strcpy(info->map[i], ft_strstr(line, " ") + 1);
 		ft_strdel(&line);
 		i++;
 	}
 }
 
-void	get_piece_info(t_piece *piece, t_info *info)
+void	get_piece_info(t_piece *piece, t_info *info, int i)
 {
 	int		gnl_ret;
-	int		i;
 	char	*line;
 
 	line = NULL;
@@ -89,7 +88,6 @@ void	get_piece_info(t_piece *piece, t_info *info)
 	piece->data = new_string_array(piece->rows, piece->cols);
 	if (!piece->data)
 		die(info);
-	i = 0;
 	while (i < piece->rows)
 	{
 		gnl_ret = get_next_line(0, &line);

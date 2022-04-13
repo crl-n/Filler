@@ -5,23 +5,27 @@ from multiprocessing.pool import ThreadPool
 import multiprocessing as mp
 import pandas as pd
 
-# TODO: Add error handling for when players fail to finish a game.
+# TODO: 
+# Add error handling for when players fail to finish a game.
+# Figure out if virtual machine can be modified to speed up games
+# Create folder for log files and implement logging of dataframe.
 
-# Globals
+# Configurations
 opponents = ['champely.filler',
              'carli.filler',
              'abanlin.filler',
              'grati.filler',
              'hcao.filler',
              'superjeannot.filler']
-maps = ['map00', 'map01'] # <-- Add map02 here if needed
-resources_path = '../resources_filler' # <-- Modify this to where your local resources_filler directory resides
-filler_vm = '{}/filler_vm'.format(resources_path)
-GAMES_PER_OPPONENT = 1 # <-- The amount of games per opponent-map combination can be configured here
+maps = ['map00', 'map01']                           # <-- Add map02 here if needed
+resources_path = '../resources_filler'              # <-- Modify this to where your local resources_filler directory resides
+timeout = 5                                         # <-- Filler_vm timeout can be set here
+GAMES_PER_OPPONENT = 1                              # <-- The amount of games per opponent-map combination can be configured here
+
 N_OF_TESTS = len(maps) * len(opponents) * GAMES_PER_OPPONENT
 BOLD = '\033[1m'
 RESET = '\033[0m'
-timeout = 5 # <-- Filler_vm timeout can be set here
+filler_vm = '{}/filler_vm'.format(resources_path)
 
 def get_result(p):
     for i in range(7):
@@ -47,6 +51,10 @@ def main():
     if player_binary.startswith('./') is False:
         player_binary = './' + player_binary
     player = player_binary.lstrip('./')
+
+    if not os.path.exists(player_binary):
+        print('Error: The player binary does not exist')
+        return
 
     main_df = pd.DataFrame(columns = ['Player', 'Opponent', 'Player Score', 'Opponent Score', 'Map'])
 
@@ -94,10 +102,6 @@ def main():
         print(BOLD + 'Full results' + RESET)
         print(main_df)
     
-    # TODO: Figure out if virtual machine can be modified to speed up games
-    # TODO: Plot/report results
-    # TODO: Create folder for log files and implement logging of dataframe.
-    #log = 'performance_log_{}'.format(time.strftime('%d%m%Y-%H%M', time.localtime()))
 
 if __name__ == '__main__':
     main()

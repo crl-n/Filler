@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:39:39 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 15:36:18 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/13 21:29:50 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	skip_opponent_info(t_info *info)
 	int		gnl_ret;
 	char	*line;
 
-	(void) info;
 	line = NULL;
 	while (1)
 	{

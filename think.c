@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:31:03 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 16:31:47 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/13 21:22:47 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,33 @@
 #include "libft.h"
 #include <stdlib.h>
 
-static int can_place_piece2(t_pos pos, int i, t_info *info, int *overlap)
+int	can_place_piece(t_pos mpos, t_info *info, t_piece *piece, int overlap)
 {
-	int	j;
-	int	x;
-	int	y;
+	t_pos	ppos;
 
-	x = pos.x;
-	y = pos.y;
-	j = 0;
-	while (j < info->piece->cols)
+	ppos.y = 0;
+	while (ppos.y < piece->rows)
 	{
-		if (x >= info->ncols)
+		if (mpos.y >= info->nrows)
 			return (0);
-		if (is_player(info->map[y][x], info->player)
-				&& info->piece->data[i][j] == '*')
-			*overlap += 1;
-		if (is_player(info->map[y][x], info->opponent)
-				&& info->piece->data[i][j] == '*')
-			return (0);
-		x++;
-		j++;
+		ppos.x = 0;
+		while (ppos.x < piece->cols)
+		{
+			if (mpos.x >= info->ncols
+				|| (is_player(info->map[mpos.y][mpos.x], info->opponent)
+				&& piece->data[ppos.y][ppos.x] == '*'))
+				return (0);
+			if (is_player(info->map[mpos.y][mpos.x], info->player)
+				&& piece->data[ppos.y][ppos.x] == '*')
+				overlap++;
+			mpos.x++;
+			ppos.x++;
+		}
+		mpos.x -= piece->cols;
+		mpos.y++;
+		ppos.y++;
 	}
-	return (0);
-}
-
-int	can_place_piece(t_pos pos, t_info *info, t_piece *piece)
-{
-	int	i;
-	int	overlap;
-
-	overlap = 0;
-	i = 0;
-	while (i < piece->rows)
-	{
-		if (pos.y >= info->nrows)
-			return (0);
-		if (can_place_piece2(pos, i, info, &overlap))
-			return (1);
-		//x -= piece->cols;
-		pos.y++;
-		i++;
-	}
-	if (overlap == 1)
-		return (1);
-	return (0);
+	return (overlap == 1);
 }
 
 unsigned int	get_heatsum(int x, int y, t_info *info, t_piece *piece)
@@ -71,8 +53,6 @@ unsigned int	get_heatsum(int x, int y, t_info *info, t_piece *piece)
 	i = 0;
 	while (i < piece->rows && y < info->nrows)
 	{
-		if (y >= info->nrows)
-			break ;
 		j = 0;
 		while (j < piece->cols)
 		{
@@ -103,7 +83,7 @@ void	find_min_heatsum(t_info *info, t_piece *piece, t_pos *minpos)
 		pos.x = 0;
 		while (pos.x < info->ncols)
 		{
-			if (can_place_piece(pos, info, piece))
+			if (can_place_piece(pos, info, piece, 0))
 			{
 				heatsum = get_heatsum(pos.x, pos.y, info, piece);
 				if (heatsum < min_heatsum)
@@ -124,7 +104,5 @@ void	think(t_piece *piece, t_info *info)
 	t_pos	pos;
 
 	find_min_heatsum(info, piece, &pos);
-	info->cmd->y = pos.y;
-	info->cmd->x = pos.x;
-	send_command(info);
+	send_command(&pos);
 }

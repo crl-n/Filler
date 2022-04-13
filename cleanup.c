@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 13:37:40 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/13 21:28:43 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	die(t_info *info)
 {
 	t_piece	*piece;
 
+	if (!info)
+		exit(0);
 	piece = info->piece;
 	if (piece)
 	{
@@ -26,11 +28,9 @@ void	die(t_info *info)
 	}
 	if (info->map)
 		free_string_array(info->map, info->nrows, info->ncols);
-	free_heatmap(info->heatmap, info->nrows, info->ncols);
-	if (info->cmd)
-		free(info->cmd);
-	if (info)
-		free(info);
+	if (info->heatmap)
+		free_heatmap(info->heatmap, info->nrows, info->ncols);
+	free(info);
 	exit(0);
 }
 

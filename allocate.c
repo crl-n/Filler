@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 22:56:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 13:36:41 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/13 21:25:05 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ t_info	*new_info(void)
 	if (!info)
 		return (NULL);
 	ft_bzero(info, sizeof (t_info));
-	info->cmd = new_pos(0, 0);
 	return (info);
 }
 
