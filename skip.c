@@ -6,14 +6,13 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:39:39 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/27 12:28:06 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/04/13 15:36:18 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
 #include "get_next_line.h"
-#include <stdio.h>
 
 void	skip_line(t_info *info)
 {
@@ -23,8 +22,7 @@ void	skip_line(t_info *info)
 	line = NULL;
 	gnl_ret = get_next_line(0, &line);
 	if (gnl_ret < 1)
-		return ;
-	dprintf(info->fd, "SKIPPED: %s\n", line);
+		die(info);
 	ft_strdel(&line);
 }
 
@@ -39,14 +37,12 @@ void	skip_opponent_info(t_info *info)
 	{
 		gnl_ret = get_next_line(0, &line);
 		if (gnl_ret < 1)
-			break ;
+			die(info);
 		if (ft_strstr(line, "got"))
 		{
-			dprintf(info->fd, "STOPPED AT: %s\n", line);
 			ft_strdel(&line);
 			break ;
 		}
-		dprintf(info->fd, "SKIPPED: %s\n", line);
 		ft_strdel(&line);
 	}
 }

@@ -6,12 +6,11 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:53:02 by cnysten           #+#    #+#             */
-/*   Updated: 2022/04/13 13:45:51 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/13 15:35:31 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
-#include <stdio.h>
 
 static int	are_valid_ids(t_info *info, int i, int j)
 {
@@ -91,24 +90,4 @@ void	update_heatmap(t_info *info)
 		i++;
 	}
 	return (update_heatmap2(info, 0));
-}
-
-void	print_heatmap(t_info *info)
-{
-	int	i;
-	int	j;
-
-	dprintf(info->fd, "PRINTING HEATMAP\n");
-	i = 0;
-	while (i < info->nrows)
-	{
-		j = 0;
-		while (j < info-> ncols)
-		{
-			dprintf(info->fd, "%u ", info->heatmap[i][j]);
-			j++;
-		}
-		dprintf(info->fd, "\n");
-		i++;
-	}
 }

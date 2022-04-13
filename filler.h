@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 13:46:34 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/04/13 15:25:59 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define MAX_HEAT 10000
 # define MAX_HEATSUM 4294967295
 
-typedef struct	s_pos
+typedef struct s_pos
 {
 	int	x;
 	int	y;
@@ -31,7 +31,6 @@ typedef struct s_piece
 
 typedef struct s_info
 {
-	int				fd;
 	int				player;
 	int				opponent;
 	int				nrows;
@@ -40,8 +39,6 @@ typedef struct s_info
 	unsigned int	**heatmap;
 	t_piece			*piece;
 	t_pos			*cmd;
-	t_pos			*center;
-	t_pos			*prev;
 }	t_info;
 
 void			die(t_info *info);

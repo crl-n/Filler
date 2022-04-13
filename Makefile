@@ -26,7 +26,6 @@ test:
 clean:
 	-@make -C ./libft clean
 	-@/bin/rm $(OBJ)
-	-@/bin/rm temp
 
 fclean: clean
 	-@make -C ./libft fclean
