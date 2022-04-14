@@ -18,7 +18,7 @@ opponents = ['champely.filler',
              'hcao.filler',
              'superjeannot.filler']
 maps = ['map00', 'map01']                           # <-- Add map02 here if needed
-resources_path = '../resources_filler'              # <-- Modify this to where your local resources_filler directory resides
+resources_path = './resources'              # <-- Modify this to where your local resources_filler directory resides
 timeout = 5                                         # <-- Filler_vm timeout can be set here
 GAMES_PER_OPPONENT = 1                              # <-- The amount of games per opponent-map combination can be configured here
 
