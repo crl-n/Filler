@@ -6,13 +6,16 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 10:12:58 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 21:35:06 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/05/30 15:35:37 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
 #include <stdlib.h>
+
+// TODO
+// Improve parser error handling.
 
 int	main(void)
 {

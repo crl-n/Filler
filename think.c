@@ -6,13 +6,16 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:31:03 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 21:22:47 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/05/30 15:31:02 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
 #include <stdlib.h>
+
+// TODO
+// Make it work with negative indices
 
 int	can_place_piece(t_pos mpos, t_info *info, t_piece *piece, int overlap)
 {

@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:53:02 by cnysten           #+#    #+#             */
-/*   Updated: 2022/04/13 15:35:31 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/05/30 15:30:20 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ static void	update_adjacent_cells(t_info *info,
 		&& info->heatmap[i - 1][j - 1] > current_heat + 1)
 		info->heatmap[i - 1][j - 1] = current_heat + 1;
 }
+
+// TODO
+// Make it more efficient by changing it into a BFS
 
 static void	update_heatmap2(t_info *info, unsigned int current_heat)
 {
