@@ -6,15 +6,16 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 21:28:43 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/13 11:16:31 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
 #include <stdlib.h>
+#include <stdio.h>
 
-void	die(t_info *info)
+void	die(t_info *info, char *error_msg)
 {
 	t_piece	*piece;
 
@@ -31,6 +32,11 @@ void	die(t_info *info)
 	if (info->heatmap)
 		free_heatmap(info->heatmap, info->nrows, info->ncols);
 	free(info);
+	if (error_msg)
+	{
+		ft_putendl_fd(error_msg, 2);
+		exit(-1);
+	}
 	exit(0);
 }
 
