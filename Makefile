@@ -6,7 +6,7 @@
 #    By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 22:16:23 by carlnysten        #+#    #+#              #
-#    Updated: 2022/04/13 22:17:15 by carlnysten       ###   ########.fr        #
+#    Updated: 2022/06/13 10:48:05 by cnysten          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ all: $(NAME)
 
 $(NAME): $(SRC)
 	-@make -C ./libft
-	$(CC) $(CFLAGS) -c $(SRC) $(INC)
+	$(CC) $(CFLAGS) -c $(SRC) $(INC) -g
 	$(CC) $(CFLAGS) -o $(NAME) $(OBJ) $(LIB) $(INC)
 
 clean:

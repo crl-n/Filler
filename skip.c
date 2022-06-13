@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:39:39 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 21:29:50 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/13 10:45:54 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	skip_line(t_info *info)
 	line = NULL;
 	gnl_ret = get_next_line(0, &line);
 	if (gnl_ret < 1)
-		die(info);
+		die(info, ERROR);
 	ft_strdel(&line);
 }
 
@@ -36,7 +36,7 @@ void	skip_opponent_info(t_info *info)
 	{
 		gnl_ret = get_next_line(0, &line);
 		if (gnl_ret < 1)
-			die(info);
+			die(info, ERROR);
 		if (ft_strstr(line, "got"))
 		{
 			ft_strdel(&line);

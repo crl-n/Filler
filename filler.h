@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 21:23:46 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/13 10:57:44 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 # define MAX_HEAT 10000
 # define MAX_HEATSUM 4294967295
+
+# define ERROR "Error."
+# define ERROR_PLAYER_INFO "Bad player info."
+# define ERROR_MAP_DIMENSIONS "Bad map dimensions."
+# define ERROR_MAP_INFO "Bad map info."
+# define ERROR_PIECE_INFO "Bad piece info."
 
 typedef struct s_pos
 {
@@ -40,7 +46,7 @@ typedef struct s_info
 	t_piece			*piece;
 }	t_info;
 
-void			die(t_info *info);
+void			die(t_info *info, char *error_msg);
 int				can_place_piece(t_pos pos,
 					t_info *info, t_piece *piece, int overlap);
 void			free_heatmap(unsigned int **heatmap, int rows, int cols);
