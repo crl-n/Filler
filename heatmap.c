@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:53:02 by cnysten           #+#    #+#             */
-/*   Updated: 2022/05/30 15:30:20 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/13 14:10:13 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,59 +21,33 @@ static int	are_valid_ids(t_info *info, int i, int j)
 	return (1);
 }
 
-static void	update_adjacent_cells(t_info *info,
-		int i, int j, unsigned int current_heat)
+static void	breadth_first_search(t_info *info, int i, int j, unsigned int current_heat)
 {
-	if (are_valid_ids(info, i - 1, j)
-		&& info->heatmap[i - 1][j] > current_heat + 1)
-		info->heatmap[i - 1][j] = current_heat + 1;
-	if (are_valid_ids(info, i - 1, j + 1)
-		&& info->heatmap[i - 1][j + 1] > current_heat + 1)
-		info->heatmap[i - 1][j + 1] = current_heat + 1;
-	if (are_valid_ids(info, i, j + 1)
-		&& info->heatmap[i][j + 1] > current_heat + 1)
-		info->heatmap[i][j + 1] = current_heat + 1;
-	if (are_valid_ids(info, i + 1, j + 1)
-		&& info->heatmap[i + 1][j + 1] > current_heat + 1)
-		info->heatmap[i + 1][j + 1] = current_heat + 1;
-	if (are_valid_ids(info, i + 1, j)
-		&& info->heatmap[i + 1][j] > current_heat + 1)
-		info->heatmap[i + 1][j] = current_heat + 1;
-	if (are_valid_ids(info, i + 1, j - 1)
-		&& info->heatmap[i + 1][j - 1] > current_heat + 1)
-		info->heatmap[i + 1][j - 1] = current_heat + 1;
-	if (are_valid_ids(info, i, j - 1)
-		&& info->heatmap[i][j - 1] > current_heat + 1)
-		info->heatmap[i][j - 1] = current_heat + 1;
-	if (are_valid_ids(info, i - 1, j - 1)
-		&& info->heatmap[i - 1][j - 1] > current_heat + 1)
-		info->heatmap[i - 1][j - 1] = current_heat + 1;
-}
-
-// TODO
-// Make it more efficient by changing it into a BFS
-
-static void	update_heatmap2(t_info *info, unsigned int current_heat)
-{
-	int	i;
-	int	j;
-
-	if (current_heat == MAX_HEAT)
+	if (current_heat == MAX_HEAT || current_heat > info->heatmap[i][j])
 		return ;
-	i = 0;
-	while (i < info->nrows)
-	{
-		j = 0;
-		while (j < info-> ncols)
-		{
-			if (info->heatmap[i][j] == current_heat)
-				update_adjacent_cells(info, i, j, current_heat);
-			j++;
-		}
-		i++;
-	}
-	return (update_heatmap2(info, current_heat + 1));
+	info->heatmap[i][j] = current_heat;
+	if (are_valid_ids(info, i - 1, j))
+		breadth_first_search(info, i - 1, j, current_heat + 1);
+	if (are_valid_ids(info, i - 1, j + 1))
+		breadth_first_search(info, i - 1, j + 1, current_heat + 1);
+	if (are_valid_ids(info, i, j + 1))
+		breadth_first_search(info, i, j + 1, current_heat + 1);
+	if (are_valid_ids(info, i + 1, j + 1))
+		breadth_first_search(info, i + 1, j + 1, current_heat + 1);
+	if (are_valid_ids(info, i + 1, j))
+		breadth_first_search(info, i + 1, j, current_heat + 1);
+	if (are_valid_ids(info, i + 1, j - 1))
+		breadth_first_search(info, i + 1, j - 1, current_heat + 1);
+	if (are_valid_ids(info, i, j - 1))
+		breadth_first_search(info, i, j - 1, current_heat + 1);
+	if (are_valid_ids(info, i - 1, j - 1))
+		breadth_first_search(info, i - 1, j - 1, current_heat + 1);
 }
+
+// 1. Iterate through map, set all NEW opponent cells to 0.
+// 2. BFS from each NEW opponent cell.
+// 3. During BFS, update each cell with the distance from the cell 
+//    the search started from IF the value is smaller than it was.
 
 void	update_heatmap(t_info *info)
 {
@@ -86,11 +60,10 @@ void	update_heatmap(t_info *info)
 		j = 0;
 		while (j < info-> ncols)
 		{
-			if (is_player(info->map[i][j], info->opponent))
-				info->heatmap[i][j] = 0;
+			if (info->map[i][j] == player_symbol_lower(info->opponent))
+				breadth_first_search(info, i, j, 0);
 			j++;
 		}
 		i++;
 	}
-	return (update_heatmap2(info, 0));
 }
