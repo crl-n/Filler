@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 11:55:30 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/13 10:53:23 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/13 11:43:21 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,20 @@ void	get_map_dimensions(t_info *info)
 	gnl_ret = get_next_line(0, &line);
 	if (gnl_ret < 1)
 		die(info, ERROR_MAP_DIMENSIONS);
-	info->nrows = ft_atoi(ft_strchr(line, ' ') + 1);
-	info->ncols = ft_atoi(ft_strrchr(line, ' ') + 1);
+	if (ft_strncmp(line, "Plateau ", 8) != 0)
+		die(info, ERROR_MAP_DIMENSIONS);
+	if (!ft_isdigit(*(line + 8)))
+		die(info, ERROR_MAP_DIMENSIONS);
+	info->nrows = ft_atoi(line + 8);
+	if (info->nrows < 1)
+		die(info, ERROR_MAP_DIMENSIONS);
+	if (!ft_isdigit(*(line + 9 + ft_intlen(info->nrows))))
+		die(info, ERROR_MAP_DIMENSIONS);
+	info->ncols = ft_atoi(line + 9 + ft_intlen(info->nrows));
+	if (info->ncols < 1)
+		die(info, ERROR_MAP_DIMENSIONS);
+	if (line[ft_strlen(line) - 1] != ':')
+		die(info, ERROR_MAP_DIMENSIONS);
 	ft_strdel(&line);
 }
 

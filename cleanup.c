@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/13 10:41:04 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/13 11:16:31 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void	die(t_info *info, char *error_msg)
 		free_heatmap(info->heatmap, info->nrows, info->ncols);
 	free(info);
 	if (error_msg)
-		perror(error_msg);
+	{
+		ft_putendl_fd(error_msg, 2);
+		exit(-1);
+	}
 	exit(0);
 }
 
