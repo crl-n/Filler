@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 11:55:30 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/13 11:43:21 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/14 10:43:14 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	get_piece_info(t_piece *piece, t_info *info, int i)
 		die(info, ERROR_PIECE_INFO);
 	free_string_array(piece->data, piece->rows, piece->cols);
 	piece->data = NULL;
-	piece->rows = ft_atoi(ft_strchr(line, ' ') + 1);
+	piece->rows = ft_atoi(ft_strchr(line, ' ') + 1); // Seg on invalid input
 	piece->cols = ft_atoi(ft_strrchr(line, ' ') + 1);
 	ft_strdel(&line);
 	piece->data = new_string_array(piece->rows, piece->cols);

@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:31:03 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/05/30 15:31:02 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/14 11:04:28 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ void	find_min_heatsum(t_info *info, t_piece *piece, t_pos *minpos)
 	unsigned int	heatsum;
 
 	min_heatsum = MAX_HEATSUM;
-	pos.y = 0;
+	pos.y = -piece->rows + 1;
 	while (pos.y < info->nrows)
 	{
-		pos.x = 0;
+		pos.x = -piece->cols + 1;
 		while (pos.x < info->ncols)
 		{
 			if (can_place_piece(pos, info, piece, 0))

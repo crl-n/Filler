@@ -17,7 +17,7 @@ opponents = ['champely.filler',
              'grati.filler',
              'hcao.filler',
              'superjeannot.filler']
-maps = ['map00', 'map01']                           # <-- Add map02 here if needed
+maps = ['map00']                           # <-- Add map02 here if needed
 resources_path = './resources'              # <-- Modify this to where your local resources_filler directory resides
 timeout = 5                                         # <-- Filler_vm timeout can be set here
 GAMES_PER_OPPONENT = 1                              # <-- The amount of games per opponent-map combination can be configured here
@@ -27,13 +27,27 @@ BOLD = '\033[1m'
 RESET = '\033[0m'
 filler_vm = '{}/filler_vm'.format(resources_path)
 
+# Get the result from the output of the filler_vm
 def get_result(p):
+
+    # Skip the header
     for i in range(7):
         line = p.readline()
+
+    # Get player 1 result
     line = p.readline()
-    o_result = int(line.split(':')[1])
+    try:
+        o_result = int(line.split(':')[1])
+    except:
+        o_result = None
+
+    # Get player 2 result
     line = p.readline()
-    x_result = int(line.split(':')[1])
+    try:
+        x_result = int(line.split(':')[1])
+    except:
+        x_result = None
+
     return (o_result, x_result)
 
 def call_proc(args):
@@ -76,11 +90,12 @@ def main():
     pool.close()
     pool.join()
 
+    # The variable names o and x are derived from the symbols of players 1 and 2
     for r in results.get():
         p, args = r
         o, x = get_result(p)
-        opponent, m = args
-        round_data = {'Player' : player, 'Opponent' : opponent, 'Player Score' : o, 'Opponent Score' : x, 'Map':m}
+        opponent_name, m = args
+        round_data = {'Player' : player, 'Opponent' : opponent_name, 'Player Score' : o, 'Opponent Score' : x, 'Map':m}
         main_df = pd.concat([main_df, pd.DataFrame([round_data])], ignore_index=True, axis = 0)
 
     end = time.time()

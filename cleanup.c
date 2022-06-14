@@ -6,14 +6,13 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/13 11:16:31 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/14 10:34:53 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 void	die(t_info *info, char *error_msg)
 {
