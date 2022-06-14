@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:53:02 by cnysten           #+#    #+#             */
-/*   Updated: 2022/06/13 14:10:13 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/14 15:43:37 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,27 +21,27 @@ static int	are_valid_ids(t_info *info, int i, int j)
 	return (1);
 }
 
-static void	breadth_first_search(t_info *info, int i, int j, unsigned int current_heat)
+static void	bfs(t_info *info, int i, int j, unsigned int current_heat)
 {
 	if (current_heat == MAX_HEAT || current_heat > info->heatmap[i][j])
 		return ;
 	info->heatmap[i][j] = current_heat;
 	if (are_valid_ids(info, i - 1, j))
-		breadth_first_search(info, i - 1, j, current_heat + 1);
+		bfs(info, i - 1, j, current_heat + 1);
 	if (are_valid_ids(info, i - 1, j + 1))
-		breadth_first_search(info, i - 1, j + 1, current_heat + 1);
+		bfs(info, i - 1, j + 1, current_heat + 1);
 	if (are_valid_ids(info, i, j + 1))
-		breadth_first_search(info, i, j + 1, current_heat + 1);
+		bfs(info, i, j + 1, current_heat + 1);
 	if (are_valid_ids(info, i + 1, j + 1))
-		breadth_first_search(info, i + 1, j + 1, current_heat + 1);
+		bfs(info, i + 1, j + 1, current_heat + 1);
 	if (are_valid_ids(info, i + 1, j))
-		breadth_first_search(info, i + 1, j, current_heat + 1);
+		bfs(info, i + 1, j, current_heat + 1);
 	if (are_valid_ids(info, i + 1, j - 1))
-		breadth_first_search(info, i + 1, j - 1, current_heat + 1);
+		bfs(info, i + 1, j - 1, current_heat + 1);
 	if (are_valid_ids(info, i, j - 1))
-		breadth_first_search(info, i, j - 1, current_heat + 1);
+		bfs(info, i, j - 1, current_heat + 1);
 	if (are_valid_ids(info, i - 1, j - 1))
-		breadth_first_search(info, i - 1, j - 1, current_heat + 1);
+		bfs(info, i - 1, j - 1, current_heat + 1);
 }
 
 // 1. Iterate through map, set all NEW opponent cells to 0.
@@ -61,7 +61,7 @@ void	update_heatmap(t_info *info)
 		while (j < info-> ncols)
 		{
 			if (info->map[i][j] == player_symbol_lower(info->opponent))
-				breadth_first_search(info, i, j, 0);
+				bfs(info, i, j, 0);
 			j++;
 		}
 		i++;

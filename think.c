@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:31:03 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/14 11:04:28 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/14 16:52:49 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,45 @@
 #include "libft.h"
 #include <stdlib.h>
 
-// TODO
-// Make it work with negative indices
+// Checks if a block can be placed in a cell.
+//
+// A block can be placed in any cell that is not already occupied
+// by the opponent. A block can also be placed outside the map.
+
+static int	is_free_cell(t_info *info, t_pos mpos, t_pos ppos, t_piece *piece)
+{
+	if (mpos.x < info->ncols && mpos.x >= 0
+		&& mpos.y < info->nrows && mpos.y >= 0)
+	{
+		if (is_player(info->map[mpos.y][mpos.x], info->opponent)
+				&& piece->data[ppos.y][ppos.x] == '*')
+			return (0);
+		return (1);
+	}
+	return (1);
+}
+
+// Checks if a block would overlap with the player's own previously
+// placed pieces.
+
+static int	is_overlapping(t_info *info, t_pos mpos, t_pos ppos, t_piece *piece)
+{
+	if (mpos.x < info->ncols && mpos.x >= 0
+		&& mpos.y < info->nrows && mpos.y >= 0)
+	{
+		if (is_player(info->map[mpos.y][mpos.x], info->player)
+				&& piece->data[ppos.y][ppos.x] == '*')
+			return (1);
+		return (0);
+	}
+	return (0);
+}
+
+// Checks if the piece can be placed at a specific position in the map.
+//
+// The row and col values for the map are stored in mpos,
+// and the row and col values for the piece are stored
+// in ppos.
 
 int	can_place_piece(t_pos mpos, t_info *info, t_piece *piece, int overlap)
 {
@@ -29,12 +66,9 @@ int	can_place_piece(t_pos mpos, t_info *info, t_piece *piece, int overlap)
 		ppos.x = 0;
 		while (ppos.x < piece->cols)
 		{
-			if (mpos.x >= info->ncols
-				|| (is_player(info->map[mpos.y][mpos.x], info->opponent)
-				&& piece->data[ppos.y][ppos.x] == '*'))
+			if (!is_free_cell(info, mpos, ppos, piece))
 				return (0);
-			if (is_player(info->map[mpos.y][mpos.x], info->player)
-				&& piece->data[ppos.y][ppos.x] == '*')
+			if (is_overlapping(info, mpos, ppos, piece))
 				overlap++;
 			mpos.x++;
 			ppos.x++;
@@ -59,9 +93,8 @@ unsigned int	get_heatsum(int x, int y, t_info *info, t_piece *piece)
 		j = 0;
 		while (j < piece->cols)
 		{
-			if (x >= info->ncols)
-				break ;
-			if (piece->data[i][j] == '*')
+			if (x >= 0 && x < info->ncols && y >= 0
+					&& piece->data[i][j] == '*')
 				heatsum += info->heatmap[y][x];
 			x++;
 			j++;
@@ -72,6 +105,10 @@ unsigned int	get_heatsum(int x, int y, t_info *info, t_piece *piece)
 	}
 	return (heatsum);
 }
+
+// TODO
+// Fix bug, where the algorithm places pieces outside of the map, with only
+// one piece (the overlapping one) on the board. This is an invalid move.
 
 void	find_min_heatsum(t_info *info, t_piece *piece, t_pos *minpos)
 {
