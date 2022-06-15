@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/15 10:09:38 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/15 14:26:32 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_info
 	t_piece			*piece;
 }	t_info;
 
+int				are_valid_ids(t_info *info, int i, int j);
 void			die(t_info *info, char *error_msg);
 int				can_place_piece(t_pos pos,
 					t_info *info, t_piece *piece, int overlap);

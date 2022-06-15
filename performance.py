@@ -57,10 +57,12 @@ def call_proc(args):
 
 def main():
 
+    # Usage
     if len(sys.argv) != 2:
         print('Usage: python3 {} [filler.player]'.format(sys.argv[0]))
         return
 
+    # Get player binary
     player_binary = sys.argv[1]
     if player_binary.startswith('./') is False:
         player_binary = './' + player_binary
@@ -70,15 +72,21 @@ def main():
         print('Error: The player binary does not exist')
         return
 
+    # Create Pandas DataFrame for data on matches
     main_df = pd.DataFrame(columns = ['Player', 'Opponent', 'Player Score', 'Opponent Score', 'Map'])
 
+    # Thread pool for running matches concurrently
     pool = ThreadPool(mp.cpu_count())
+
+    # Tests will contain all opponent-map combinations
     tests = []
 
+    # Timer for how long it takes to run all matches
     start = time.time()
 
     print(BOLD + 'Running matches... Please wait.' + RESET)
 
+    # Run all matches
     for opponent in opponents:
         opponent_binary = '{}/players/{}'.format(resources_path, opponent)
         for m in maps:
@@ -90,7 +98,7 @@ def main():
     pool.close()
     pool.join()
 
-    # The variable names o and x are derived from the symbols of players 1 and 2
+    # Process results of matches
     for r in results.get():
         p, args = r
         o, x = get_result(p)
@@ -100,6 +108,7 @@ def main():
 
     end = time.time()
 
+    # Output results
     print('Execution time: {:.3f} seconds'.format(end - start))
     print(BOLD + 'Aggregate results' + RESET)
 
@@ -116,7 +125,6 @@ def main():
     if input() == 'y':
         print(BOLD + 'Full results' + RESET)
         print(main_df)
-    
 
 if __name__ == '__main__':
     main()

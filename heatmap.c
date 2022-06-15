@@ -6,13 +6,13 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:53:02 by cnysten           #+#    #+#             */
-/*   Updated: 2022/06/14 15:43:37 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/15 14:26:13 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 
-static int	are_valid_ids(t_info *info, int i, int j)
+int	are_valid_ids(t_info *info, int i, int j)
 {
 	if (i < 0 || i >= info->nrows)
 		return (0);
@@ -48,6 +48,10 @@ static void	bfs(t_info *info, int i, int j, unsigned int current_heat)
 // 2. BFS from each NEW opponent cell.
 // 3. During BFS, update each cell with the distance from the cell 
 //    the search started from IF the value is smaller than it was.
+
+// TODO
+// Heatmap is generated incorrectly for the first round due to the first
+// symbol being UPPER
 
 void	update_heatmap(t_info *info)
 {

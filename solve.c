@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:31:03 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/15 10:21:52 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/15 14:27:16 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 
 static int	is_free_cell(t_info *info, t_pos mpos, t_pos ppos, t_piece *piece)
 {
+	if (mpos.x >= info->ncols && piece->data[ppos.y][ppos.x] ==  '*')
+		return (0);
+	if (mpos.y >= info->nrows && piece->data[ppos.y][ppos.x] ==  '*')
+		return (0);
 	if (mpos.x < 0)
 		mpos.x = info->ncols + mpos.x;
 	if (mpos.y < 0)
@@ -73,8 +77,8 @@ int	can_place_piece(t_pos mpos, t_info *info, t_piece *piece, int overlap)
 	ppos.y = 0;
 	while (ppos.y < piece->rows)
 	{
-		if (mpos.y >= info->nrows)
-			return (0);
+		//if (mpos.y >= info->nrows)
+	//		return (0);
 		ppos.x = 0;
 		while (ppos.x < piece->cols)
 		{
@@ -118,9 +122,7 @@ unsigned int	get_heatsum(int x, int y, t_info *info, t_piece *piece)
 	return (heatsum);
 }
 
-// TODO
-// Fix bug, where the algorithm places pieces outside of the map, with only
-// one piece (the overlapping one) on the board. This is an invalid move.
+// Try to place the piece so that it is completely within the map.
 
 int	search_within_map(t_info *info, t_piece *piece, t_pos *minpos)
 {
@@ -135,7 +137,7 @@ int	search_within_map(t_info *info, t_piece *piece, t_pos *minpos)
 	while (pos.y < info->nrows)
 	{
 		pos.x = 0;
-		while (pos.x < info->ncols - piece->cols)
+		while (pos.x < info->ncols)
 		{
 			if (can_place_piece(pos, info, piece, 0))
 			{
@@ -154,6 +156,10 @@ int	search_within_map(t_info *info, t_piece *piece, t_pos *minpos)
 	return (place_found);
 }
 
+// Try to place the piece on the top and left borders.
+// Placing the piece on right and bottom borders often causes
+// issues with the filler_vm, therefore I avoid doing that.
+
 void	search_outside_map(t_info *info, t_piece *piece, t_pos *minpos)
 {
 	t_pos			pos;
@@ -162,12 +168,13 @@ void	search_outside_map(t_info *info, t_piece *piece, t_pos *minpos)
 
 	min_heatsum = MAX_HEATSUM;
 	pos.y = -piece->rows + 1;
-	while (pos.y < info->nrows + piece->rows)
+	while (pos.y < info->nrows)
 	{
 		pos.x = -piece->cols + 1;
-		while (pos.x < info->ncols - piece->cols)
+		while (pos.x < info->ncols)
 		{
-			if (can_place_piece(pos, info, piece, 0))
+			if (!are_valid_ids(info, pos.y, pos.x)
+				&& can_place_piece(pos, info, piece, 0))
 			{
 				heatsum = get_heatsum(pos.x, pos.y, info, piece);
 				if (heatsum < min_heatsum)
@@ -191,11 +198,12 @@ void	solve(t_piece *piece, t_info *info)
 	t_pos	pos;
 	int		place_found;
 
-	pos.x = 0;
-	pos.y = 0;
+	pos = (t_pos){0, 0};
 	place_found = 0;
 	place_found = search_within_map(info, piece, &pos);
 	if (!place_found)
 		search_outside_map(info, piece, &pos);
 	send_command(&pos);
+	if (!place_found)
+		die(info, NULL);
 }
