@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 13:31:03 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/14 16:52:49 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/15 10:21:52 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 
 static int	is_free_cell(t_info *info, t_pos mpos, t_pos ppos, t_piece *piece)
 {
+	if (mpos.x < 0)
+		mpos.x = info->ncols + mpos.x;
+	if (mpos.y < 0)
+		mpos.y = info->nrows + mpos.y;
 	if (mpos.x < info->ncols && mpos.x >= 0
 		&& mpos.y < info->nrows && mpos.y >= 0)
 	{
@@ -34,9 +38,17 @@ static int	is_free_cell(t_info *info, t_pos mpos, t_pos ppos, t_piece *piece)
 
 // Checks if a block would overlap with the player's own previously
 // placed pieces.
+//
+// If a piece crosses the map border to the left, top or down, it wraps around.
+// In these cases, it is necessary to check if the piece overlaps on the other
+// side of the map.
 
 static int	is_overlapping(t_info *info, t_pos mpos, t_pos ppos, t_piece *piece)
 {
+	if (mpos.x < 0)
+		mpos.x = info->ncols + mpos.x;
+	if (mpos.y < 0)
+		mpos.y = info->nrows + mpos.y;
 	if (mpos.x < info->ncols && mpos.x >= 0
 		&& mpos.y < info->nrows && mpos.y >= 0)
 	{
@@ -94,7 +106,7 @@ unsigned int	get_heatsum(int x, int y, t_info *info, t_piece *piece)
 		while (j < piece->cols)
 		{
 			if (x >= 0 && x < info->ncols && y >= 0
-					&& piece->data[i][j] == '*')
+				&& piece->data[i][j] == '*')
 				heatsum += info->heatmap[y][x];
 			x++;
 			j++;
@@ -110,7 +122,39 @@ unsigned int	get_heatsum(int x, int y, t_info *info, t_piece *piece)
 // Fix bug, where the algorithm places pieces outside of the map, with only
 // one piece (the overlapping one) on the board. This is an invalid move.
 
-void	find_min_heatsum(t_info *info, t_piece *piece, t_pos *minpos)
+int	search_within_map(t_info *info, t_piece *piece, t_pos *minpos)
+{
+	t_pos			pos;
+	unsigned int	min_heatsum;
+	unsigned int	heatsum;
+	int				place_found;
+
+	min_heatsum = MAX_HEATSUM;
+	place_found = FALSE;
+	pos.y = 0;
+	while (pos.y < info->nrows)
+	{
+		pos.x = 0;
+		while (pos.x < info->ncols - piece->cols)
+		{
+			if (can_place_piece(pos, info, piece, 0))
+			{
+				place_found = TRUE;
+				heatsum = get_heatsum(pos.x, pos.y, info, piece);
+				if (heatsum < min_heatsum)
+				{
+					min_heatsum = heatsum;
+					*minpos = (t_pos){pos.x, pos.y};
+				}
+			}
+			pos.x++;
+		}
+		pos.y++;
+	}
+	return (place_found);
+}
+
+void	search_outside_map(t_info *info, t_piece *piece, t_pos *minpos)
 {
 	t_pos			pos;
 	unsigned int	min_heatsum;
@@ -118,10 +162,10 @@ void	find_min_heatsum(t_info *info, t_piece *piece, t_pos *minpos)
 
 	min_heatsum = MAX_HEATSUM;
 	pos.y = -piece->rows + 1;
-	while (pos.y < info->nrows)
+	while (pos.y < info->nrows + piece->rows)
 	{
 		pos.x = -piece->cols + 1;
-		while (pos.x < info->ncols)
+		while (pos.x < info->ncols - piece->cols)
 		{
 			if (can_place_piece(pos, info, piece, 0))
 			{
@@ -139,10 +183,19 @@ void	find_min_heatsum(t_info *info, t_piece *piece, t_pos *minpos)
 	}
 }
 
-void	think(t_piece *piece, t_info *info)
+// Search for a place to put the piece within the map.
+// If none can be found, search outside the map.
+
+void	solve(t_piece *piece, t_info *info)
 {
 	t_pos	pos;
+	int		place_found;
 
-	find_min_heatsum(info, piece, &pos);
+	pos.x = 0;
+	pos.y = 0;
+	place_found = 0;
+	place_found = search_within_map(info, piece, &pos);
+	if (!place_found)
+		search_outside_map(info, piece, &pos);
 	send_command(&pos);
 }

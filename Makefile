@@ -6,7 +6,7 @@
 #    By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 22:16:23 by carlnysten        #+#    #+#              #
-#    Updated: 2022/06/13 10:48:05 by cnysten          ###   ########.fr        #
+#    Updated: 2022/06/15 10:05:52 by cnysten          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@
 NAME = cnysten.filler
 
 SRC = main.c allocate.c cleanup.c command.c parse.c skip.c \
-	  symbol.c think.c heatmap.c
+	  symbol.c solve.c heatmap.c
 
 OBJ = $(SRC:%.c=%.o)
 

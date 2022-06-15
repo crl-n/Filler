@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/13 10:57:44 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/15 10:09:38 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # define MAX_HEAT 10000
 # define MAX_HEATSUM 4294967295
+
+# define FALSE 0
+# define TRUE 1
 
 # define ERROR "Error."
 # define ERROR_PLAYER_INFO "Bad player info."
@@ -66,7 +69,7 @@ char			player_symbol(int player);
 void			send_command(t_pos *pos);
 void			skip_line(t_info *info);
 void			skip_opponent_info(t_info *info);
-void			think(t_piece *piece, t_info *info);
+void			solve(t_piece *piece, t_info *info);
 void			update_heatmap(t_info *info);
 
 #endif
