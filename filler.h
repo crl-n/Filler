@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/15 14:26:32 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/16 18:55:56 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define ERROR_MAP_DIMENSIONS "Bad map dimensions."
 # define ERROR_MAP_INFO "Bad map info."
 # define ERROR_PIECE_INFO "Bad piece info."
+
+# include "libft.h"
 
 typedef struct s_pos
 {
@@ -44,8 +46,12 @@ typedef struct s_info
 	int				opponent;
 	int				nrows;
 	int				ncols;
+	int				first_round;
 	char			**map;
 	unsigned int	**heatmap;
+	int				**visited;
+	size_t			visited_size;
+	t_list			*queue;
 	t_piece			*piece;
 }	t_info;
 
@@ -67,6 +73,9 @@ t_pos			*new_pos(int x, int y);
 char			**new_string_array(int rows, int cols);
 char			player_symbol_lower(int player);
 char			player_symbol(int player);
+void			print_heatmap(t_info *info);
+void			print_map(t_info *info);
+void			reset_visited(t_info *info);
 void			send_command(t_pos *pos);
 void			skip_line(t_info *info);
 void			skip_opponent_info(t_info *info);

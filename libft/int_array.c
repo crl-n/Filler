@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 18:22:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/03/22 18:23:36 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/16 18:38:35 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	**int_array_2d(int n_rows, int n_cols)
 	int		i;
 	size_t	size;
 
-	size = n_rows * sizeof (int *) + n_cols * sizeof (int);
+	size = n_rows * sizeof (int *) + n_rows * n_cols * sizeof (int);
 	arr = (int **) malloc(size);
 	if (!arr)
 		return (NULL);

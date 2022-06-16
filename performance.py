@@ -20,8 +20,9 @@ opponents = ['champely.filler',
 maps = ['map00']                           # <-- Add map02 here if needed
 resources_path = './resources'              # <-- Modify this to where your local resources_filler directory resides
 timeout = 5                                         # <-- Filler_vm timeout can be set here
-GAMES_PER_OPPONENT = 1                              # <-- The amount of games per opponent-map combination can be configured here
+GAMES_PER_OPPONENT = 5                              # <-- The amount of games per opponent-map combination can be configured here
 
+# Constants
 N_OF_TESTS = len(maps) * len(opponents) * GAMES_PER_OPPONENT
 BOLD = '\033[1m'
 RESET = '\033[0m'
@@ -39,14 +40,14 @@ def get_result(p):
     try:
         o_result = int(line.split(':')[1])
     except:
-        o_result = None
+        o_result = 0
 
     # Get player 2 result
     line = p.readline()
     try:
         x_result = int(line.split(':')[1])
     except:
-        x_result = None
+        x_result = 0
 
     return (o_result, x_result)
 

@@ -6,13 +6,38 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/14 10:34:53 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/16 18:56:08 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
 #include <stdlib.h>
+
+void	reset_visited(t_info *info)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < info->nrows)
+	{
+		j = 0;
+		while (j < info->ncols)
+		{
+			info->visited[i][j] = FALSE;
+			j++;
+		}
+		i++;
+	}
+}
+
+void	del(void *node, size_t size)
+{
+	(void) size;
+	if (node)
+		free(node);
+}
 
 void	die(t_info *info, char *error_msg)
 {
@@ -30,6 +55,10 @@ void	die(t_info *info, char *error_msg)
 		free_string_array(info->map, info->nrows, info->ncols);
 	if (info->heatmap)
 		free_heatmap(info->heatmap, info->nrows, info->ncols);
+	if (info->visited)
+		free(info->visited);
+	if (info->queue)
+		ft_lstdel(&info->queue, del);
 	free(info);
 	if (error_msg)
 	{

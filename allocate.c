@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 22:56:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/04/13 21:25:05 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/16 11:31:02 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_info	*new_info(void)
 	if (!info)
 		return (NULL);
 	ft_bzero(info, sizeof (t_info));
+	info->first_round = 1;
 	return (info);
 }
 
