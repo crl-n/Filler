@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/16 18:56:08 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/17 00:04:05 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	die(t_info *info, char *error_msg)
 		ft_putendl_fd(error_msg, 2);
 		exit(-1);
 	}
+	//system("leaks cnysten.filler > leaks_output");
 	exit(0);
 }
 

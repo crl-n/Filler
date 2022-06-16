@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:01:00 by cnysten           #+#    #+#             */
-/*   Updated: 2022/06/16 19:01:11 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/17 00:01:20 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 // A block can be placed in any cell that is not already occupied
 // by the opponent. A block can also be placed outside the map.
 
-static int	is_free_cell(t_info *info, t_pos mpos, t_pos ppos, t_piece *piece)
+static int	is_free_cell(t_info *info, t_pos mpos)
 {
-	if (mpos.x >= info->ncols && piece->data[ppos.y][ppos.x] == '*')
+	if (mpos.x >= info->ncols)
 		return (0);
-	if (mpos.y >= info->nrows && piece->data[ppos.y][ppos.x] == '*')
+	if (mpos.y >= info->nrows)
 		return (0);
 	if (mpos.x < 0)
 		mpos.x = info->ncols + mpos.x;
@@ -32,8 +32,7 @@ static int	is_free_cell(t_info *info, t_pos mpos, t_pos ppos, t_piece *piece)
 	if (mpos.x < info->ncols && mpos.x >= 0
 		&& mpos.y < info->nrows && mpos.y >= 0)
 	{
-		if (is_player(info->map[mpos.y][mpos.x], info->opponent)
-				&& piece->data[ppos.y][ppos.x] == '*')
+		if (is_player(info->map[mpos.y][mpos.x], info->opponent))
 			return (0);
 		return (1);
 	}
@@ -47,7 +46,7 @@ static int	is_free_cell(t_info *info, t_pos mpos, t_pos ppos, t_piece *piece)
 // In these cases, it is necessary to check if the piece overlaps on the other
 // side of the map.
 
-static int	is_overlapping(t_info *info, t_pos mpos, t_pos ppos, t_piece *piece)
+static int	is_overlapping(t_info *info, t_pos mpos)
 {
 	if (mpos.x < 0)
 		mpos.x = info->ncols + mpos.x;
@@ -56,8 +55,7 @@ static int	is_overlapping(t_info *info, t_pos mpos, t_pos ppos, t_piece *piece)
 	if (mpos.x < info->ncols && mpos.x >= 0
 		&& mpos.y < info->nrows && mpos.y >= 0)
 	{
-		if (is_player(info->map[mpos.y][mpos.x], info->player)
-				&& piece->data[ppos.y][ppos.x] == '*')
+		if (is_player(info->map[mpos.y][mpos.x], info->player))
 			return (1);
 		return (0);
 	}
@@ -80,10 +78,17 @@ int	can_place_piece(t_pos mpos, t_info *info, t_piece *piece, int overlap)
 		ppos.x = 0;
 		while (ppos.x < piece->cols)
 		{
-			if (!is_free_cell(info, mpos, ppos, piece))
-				return (0);
-			if (is_overlapping(info, mpos, ppos, piece))
-				overlap++;
+			if (piece->data[ppos.y][ppos.x] == '*')
+			{
+				if (!is_free_cell(info, mpos))
+					return (0);
+				if (is_overlapping(info, mpos))
+				{
+					overlap++;
+					if (overlap == 2)
+						return (FALSE);
+				}
+			}
 			mpos.x++;
 			ppos.x++;
 		}
