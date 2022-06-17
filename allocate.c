@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 22:56:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/16 11:31:02 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/17 23:31:07 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 #include "libft.h"
 #include <stdlib.h>
 
-t_pos	*new_pos(int x, int y)
-{
-	t_pos	*pos;
+// 1-dimensional t_pos array used for breadth first search in update_heatmap.
 
-	pos = (t_pos *) malloc(sizeof (t_pos));
-	if (!pos)
+t_pos	*new_pos_array(int nrows, int ncols)
+{
+	t_pos	*pos_array;
+	size_t	size;
+
+	size = nrows * ncols * sizeof (t_pos);
+	pos_array = (t_pos *) ft_memalloc(size);
+	if (!pos_array)
 		return (NULL);
-	pos->x = x;
-	pos->y = y;
-	return (pos);
+	ft_bzero(pos_array, size);
+	return (pos_array);
 }
 
 t_info	*new_info(void)

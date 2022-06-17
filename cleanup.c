@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/17 00:04:05 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/17 23:31:30 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	die(t_info *info, char *error_msg)
 		free_heatmap(info->heatmap, info->nrows, info->ncols);
 	if (info->visited)
 		free(info->visited);
-	if (info->queue)
-		ft_lstdel(&info->queue, del);
+	if (info->queue.data)
+		free(info->queue.data);
 	free(info);
 	if (error_msg)
 	{

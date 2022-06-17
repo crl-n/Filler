@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/16 18:55:56 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/17 23:25:14 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ typedef struct s_piece
 	char	**data;
 }	t_piece;
 
+typedef struct s_queue
+{
+	t_pos	*data;
+	int		size;
+	int		push;	
+	int		pop;	
+}	t_queue;
+
 typedef struct s_info
 {
 	int				player;
@@ -51,7 +59,7 @@ typedef struct s_info
 	unsigned int	**heatmap;
 	int				**visited;
 	size_t			visited_size;
-	t_list			*queue;
+	t_queue			queue;
 	t_piece			*piece;
 }	t_info;
 
@@ -69,13 +77,17 @@ int				is_player(char c, int player);
 unsigned int	**new_heatmap(int rows, int cols);
 t_info			*new_info(void);
 t_piece			*new_piece(void);
-t_pos			*new_pos(int x, int y);
+t_pos			*new_pos_array(int nrows, int ncols);
 char			**new_string_array(int rows, int cols);
 char			player_symbol_lower(int player);
 char			player_symbol(int player);
 void			print_heatmap(t_info *info);
 void			print_map(t_info *info);
+void			push_to_queue(t_info *info, int i, int j);
+t_pos			pop_from_queue(t_info *info);
+int				queue_has_next(t_info *info);
 void			reset_visited(t_info *info);
+void			reset_queue(t_info *info);
 void			send_command(t_pos *pos);
 void			skip_line(t_info *info);
 void			skip_opponent_info(t_info *info);
