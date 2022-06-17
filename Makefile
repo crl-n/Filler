@@ -6,7 +6,7 @@
 #    By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/13 22:16:23 by carlnysten        #+#    #+#              #
-#    Updated: 2022/06/16 19:02:01 by cnysten          ###   ########.fr        #
+#    Updated: 2022/06/17 11:02:59 by carlnysten       ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@
 
 NAME = cnysten.filler
 
-SRC = main.c allocate.c can_place_piece.c cleanup.c command.c parse.c skip.c \
+SRC = main.c allocate.c can_place_piece.c cleanup.c command.c \
+	  get_map_info.c parse.c skip.c \
 	  symbol.c solve.c heatmap.c debug.c
 
 OBJ = $(SRC:%.c=%.o)
