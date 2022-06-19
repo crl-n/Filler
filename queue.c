@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 22:28:31 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/17 23:59:08 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/20 00:08:47 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	push_to_queue(t_info *info, int i, int j)
 {
 	if (info->queue.push >= info->queue.size)
 		die(info, "Error, queue is full.");
-	info->queue.data[info->queue.push] = (t_pos){i, j};
+	info->queue.data[info->queue.push] = (t_pos){j, i};
 	info->queue.push++;
 }
 

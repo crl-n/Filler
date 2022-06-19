@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 10:12:58 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/17 23:43:16 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/20 00:52:54 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	init_info(t_info *info)
 	info->piece = new_piece();
 	info->map = new_string_array(info->nrows, info->ncols);
 	info->heatmap = new_heatmap(info->nrows, info->ncols);
-	info->visited = int_array_2d(info->nrows, info->ncols);
+	info->visited = boolean_array(info->nrows, info->ncols);
+	info->searched = boolean_array(info->nrows, info->ncols);
 	info->queue.data = new_pos_array(info->nrows, info->ncols);
 	info->queue.size = info->nrows * info->ncols;
 	if (!info->piece || !info->map || !info->heatmap || !info->visited)

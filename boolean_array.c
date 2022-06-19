@@ -1,32 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   int_array.c                                        :+:      :+:    :+:   */
+/*   boolean_array.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/22 18:22:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 00:32:35 by carlnysten       ###   ########.fr       */
+/*   Created: 2022/06/20 00:34:52 by carlnysten        #+#    #+#             */
+/*   Updated: 2022/06/20 00:53:22 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
-#include <stdlib.h>
 #include "libft.h"
+#include "filler.h"
+#include <stdlib.h>
 
-int	**int_array_2d(int n_rows, int n_cols)
+// Allocates a 2D array of t_bool's, i.e. 8-bit unsigned integers.
+
+t_bool	**boolean_array(int n_rows, int n_cols)
 {
-	int		**arr;
-	int		*cells;
+	t_bool		**arr;
+	t_bool		*cells;
 	int		i;
 	size_t	size;
 
-	size = n_rows * sizeof (int *) + n_rows * n_cols * sizeof (int);
-	arr = (int **) malloc(size);
+	size = n_rows * sizeof (t_bool *) + n_rows * n_cols * sizeof (t_bool);
+	arr = (t_bool **) malloc(size);
 	if (!arr)
 		return (NULL);
 	ft_bzero(arr, size);
-	cells = (int *)(arr + n_rows);
+	cells = (t_bool *)(arr + n_rows);
 	i = 0;
 	while (i < n_rows)
 	{

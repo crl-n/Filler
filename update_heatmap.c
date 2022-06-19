@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:58:37 by cnysten           #+#    #+#             */
-/*   Updated: 2022/06/17 23:58:49 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/20 00:55:12 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,14 @@ void	update_heatmap(t_info *info)
 		j = 0;
 		while (j < info->ncols)
 		{
-			if (info->map[i][j] == opponent_symbol)
+			if (!info->searched[i][j] && info->map[i][j] == opponent_symbol)
+			{
+				info->searched[i][j] = TRUE;
 				bfs(info, i, j, 0);
+				reset_visited(info);
+			}
 			j++;
 		}
 		i++;
 	}
-	reset_visited(info);
 }
