@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 10:12:58 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 00:52:54 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/20 02:23:38 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(void)
 		get_map_info(info);
 		update_heatmap(info);
 		get_piece_info(info->piece, info, 0);
-		solve(info->piece, info);
+		solve(info);
 		skip_line(info);
 	}
 	return (0);

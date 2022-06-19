@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:53:55 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/17 11:10:49 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/20 02:13:00 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,3 @@ void	get_map_info(t_info *info)
 	}
 	ft_strdel(&buffer.data);
 }
-

@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:01:00 by cnysten           #+#    #+#             */
-/*   Updated: 2022/06/17 00:01:20 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/20 01:58:37 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,10 @@ int	can_place_piece(t_pos mpos, t_info *info, t_piece *piece, int overlap)
 		{
 			if (piece->data[ppos.y][ppos.x] == '*')
 			{
-				if (!is_free_cell(info, mpos))
+				if (!is_free_cell(info, mpos) || overlap == 2)
 					return (0);
 				if (is_overlapping(info, mpos))
-				{
 					overlap++;
-					if (overlap == 2)
-						return (FALSE);
-				}
 			}
 			mpos.x++;
 			ppos.x++;

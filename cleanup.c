@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 00:56:04 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/20 02:12:12 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,17 @@
 #include "libft.h"
 #include <stdlib.h>
 
-void	reset_visited(t_info *info)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < info->nrows)
-	{
-		j = 0;
-		while (j < info->ncols)
-		{
-			info->visited[i][j] = FALSE;
-			j++;
-		}
-		i++;
-	}
-}
-
 void	del(void *node, size_t size)
 {
 	(void) size;
 	if (node)
 		free(node);
+}
+
+void	put_error_msg(char *error_msg)
+{
+	ft_putendl_fd(error_msg, 2);
+	exit(-1);
 }
 
 void	die(t_info *info, char *error_msg)
@@ -63,11 +51,8 @@ void	die(t_info *info, char *error_msg)
 		free(info->queue.data);
 	free(info);
 	if (error_msg)
-	{
-		ft_putendl_fd(error_msg, 2);
-		exit(-1);
-	}
-	//system("leaks cnysten.filler > leaks_output");
+		put_error_msg(error_msg);
+	system("leaks cnysten.filler > leaks_output");
 	exit(0);
 }
 

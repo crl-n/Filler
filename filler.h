@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 00:49:40 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/20 02:23:21 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void			reset_visited(t_info *info);
 void			reset_queue(t_info *info);
 void			send_command(t_pos *pos);
 void			skip_line(t_info *info);
-void			solve(t_piece *piece, t_info *info);
+void			solve(t_info *info);
 t_bool			**boolean_array(int n_rows, int n_cols);
 void			update_heatmap(t_info *info);
 
