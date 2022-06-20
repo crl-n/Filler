@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 22:28:31 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 00:08:47 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/20 13:19:06 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,6 @@ t_pos	pop_from_queue(t_info *info)
 
 void	reset_queue(t_info *info)
 {
-	/*
-	int	i;
-
-	i = 0;
-	while (i < info->queue.size)
-	{
-		info->queue.data[i] = (t_pos){0, 0};
-		i++;
-	}
-	*/
 	info->queue.push = 0;
 	info->queue.pop = 0;
 }

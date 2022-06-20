@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 02:23:21 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/20 13:20:53 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 
 # include "libft.h"
 
-typedef unsigned char t_bool;
+typedef unsigned char	t_bool;
 
 typedef struct s_pos
 {
@@ -41,6 +41,12 @@ typedef struct s_piece
 	int		rows;
 	char	**data;
 }	t_piece;
+
+typedef struct s_buffer
+{
+	char	*data;
+	size_t	size;
+}	t_buffer;
 
 typedef struct s_queue
 {
@@ -60,10 +66,11 @@ typedef struct s_info
 	char			**map;
 	unsigned int	**heatmap;
 	t_bool			**visited;
-	t_bool			**searched;
 	size_t			visited_size;
+	t_bool			**searched;
 	t_queue			queue;
 	t_piece			*piece;
+	t_buffer		buffer;
 }	t_info;
 
 int				are_valid_ids(t_info *info, int i, int j);

@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 10:12:58 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 02:23:38 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/20 13:19:22 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ static void	init_info(t_info *info)
 	info->searched = boolean_array(info->nrows, info->ncols);
 	info->queue.data = new_pos_array(info->nrows, info->ncols);
 	info->queue.size = info->nrows * info->ncols;
+	info->buffer.size = info->nrows * (5 + info->ncols) + 1;
+	info->buffer.data = (char *) malloc(info->buffer.size);
+	info->buffer.data[info->buffer.size - 1] = '\0';
 	if (!info->piece || !info->map || !info->heatmap || !info->visited)
 		die(info, ERROR);
 }

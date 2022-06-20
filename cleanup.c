@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 02:12:12 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/20 13:21:37 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,13 @@ void	put_error_msg(char *error_msg)
 
 void	die(t_info *info, char *error_msg)
 {
-	t_piece	*piece;
-
 	if (!info)
 		exit(0);
-	piece = info->piece;
-	if (piece)
+	if (info->piece)
 	{
-		free_string_array(piece->data, piece->rows, piece->cols);
-		free(piece);
+		free_string_array(info->piece->data,
+			info->piece->rows, info->piece->cols);
+		free(info->piece);
 	}
 	if (info->map)
 		free_string_array(info->map, info->nrows, info->ncols);
@@ -49,10 +47,10 @@ void	die(t_info *info, char *error_msg)
 		free(info->searched);
 	if (info->queue.data)
 		free(info->queue.data);
+	ft_strdel(&(info->buffer.data));
 	free(info);
 	if (error_msg)
 		put_error_msg(error_msg);
-	system("leaks cnysten.filler > leaks_output");
 	exit(0);
 }
 
