@@ -4,3 +4,4 @@ cnysten.filler
 *.o
 *libft.a
 tags
+leaks_output

@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:53:55 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 13:22:44 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/20 13:38:17 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	get_map_info(t_info *info)
 	total_bytes_read = 0;
 	while (total_bytes_read != (int)(info->buffer.size - 1))
 	{
-		bytes_read = read(0, info->buffer.data + bytes_read,
-				info->buffer.size - 1 - bytes_read);
+		bytes_read = read(0, info->buffer.data + total_bytes_read,
+				info->buffer.size - 1 - total_bytes_read);
 		if (bytes_read < 0)
 			die(info, ERROR_MAP_INFO);
 		total_bytes_read += bytes_read;
