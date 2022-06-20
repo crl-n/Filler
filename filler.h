@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 13:20:53 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/20 14:55:42 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void			free_string_array(char **array, int rows, int cols);
 void			get_player_number(t_info *info);
 void			get_map_dimensions(t_info *info);
 void			get_map_info(t_info *info);
-void			get_piece_info(t_piece *piece, t_info *info, int i);
+void			get_piece_info(t_info *info);
 int				is_player(char c, int player);
 unsigned int	**new_heatmap(int rows, int cols);
 t_info			*new_info(void);

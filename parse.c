@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 11:55:30 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 13:40:12 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/20 14:50:46 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,32 +64,4 @@ void	get_map_dimensions(t_info *info)
 	if (line[ft_strlen(line) - 1] != ':')
 		die(info, ERROR_MAP_DIMENSIONS);
 	ft_strdel(&line);
-}
-
-void	get_piece_info(t_piece *piece, t_info *info, int i)
-{
-	int		gnl_ret;
-	char	*line;
-
-	line = NULL;
-	gnl_ret = get_next_line(0, &line);
-	if (gnl_ret < 1)
-		die(info, ERROR_PIECE_INFO);
-	free_string_array(piece->data, piece->rows, piece->cols);
-	piece->data = NULL;
-	piece->rows = ft_atoi(ft_strchr(line, ' ') + 1); // Seg on invalid input
-	piece->cols = ft_atoi(ft_strrchr(line, ' ') + 1);
-	ft_strdel(&line);
-	piece->data = new_string_array(piece->rows, piece->cols);
-	if (!piece->data)
-		die(info, ERROR_PIECE_INFO);
-	while (i < piece->rows)
-	{
-		gnl_ret = get_next_line(0, &line);
-		if (gnl_ret < 1)
-			die(info, ERROR_PIECE_INFO);
-		ft_strncpy(piece->data[i], line, piece->cols);
-		ft_strdel(&line);
-		i++;
-	}
 }
