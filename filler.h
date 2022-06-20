@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 14:55:42 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/20 23:43:48 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_info
 int				are_valid_ids(t_info *info, int i, int j);
 void			die(t_info *info, char *error_msg);
 int				can_place_piece(t_pos pos,
-					t_info *info, t_piece *piece, int overlap);
+					t_info *info, t_pos ppos, int overlap);
 void			free_heatmap(unsigned int **heatmap, int rows, int cols);
 void			free_string_array(char **array, int rows, int cols);
 void			get_player_number(t_info *info);

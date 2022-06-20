@@ -1,7 +1,7 @@
 import sys
 import os
 import time
-from multiprocessing.pool import ThreadPool
+from multiprocessing.pool import Pool
 import multiprocessing as mp
 import pandas as pd
 
@@ -37,17 +37,15 @@ def get_result(p):
 
     # Get player 1 result
     line = p.readline()
-    try:
-        o_result = int(line.split(':')[1])
-    except:
-        o_result = 0
+    if 'error' in line:
+        line = p.readline()
+    o_result = int(line.split(':')[1])
 
     # Get player 2 result
     line = p.readline()
-    try:
-        x_result = int(line.split(':')[1])
-    except:
-        x_result = 0
+    if 'error' in line:
+        line = p.readline()
+    x_result = int(line.split(':')[1])
 
     return (o_result, x_result)
 
@@ -77,7 +75,7 @@ def main():
     main_df = pd.DataFrame(columns = ['Player', 'Opponent', 'Player Score', 'Opponent Score', 'Map'])
 
     # Thread pool for running matches concurrently
-    pool = ThreadPool(mp.cpu_count())
+    pool = Pool(mp.cpu_count())
 
     # Tests will contain all opponent-map combinations
     tests = []
