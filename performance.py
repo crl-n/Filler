@@ -17,23 +17,38 @@ opponents = ['champely.filler',
              'grati.filler',
              'hcao.filler',
              'superjeannot.filler']
-maps = ['map00', 'map01']                           # <-- Add map02 here if needed
+maps = ['map00']                           # <-- Add map02 here if needed
 resources_path = './resources'              # <-- Modify this to where your local resources_filler directory resides
 timeout = 5                                         # <-- Filler_vm timeout can be set here
-GAMES_PER_OPPONENT = 1                              # <-- The amount of games per opponent-map combination can be configured here
+GAMES_PER_OPPONENT = 5                              # <-- The amount of games per opponent-map combination can be configured here
 
+# Constants
 N_OF_TESTS = len(maps) * len(opponents) * GAMES_PER_OPPONENT
 BOLD = '\033[1m'
 RESET = '\033[0m'
 filler_vm = '{}/filler_vm'.format(resources_path)
 
+# Get the result from the output of the filler_vm
 def get_result(p):
+
+    # Skip the header
     for i in range(7):
         line = p.readline()
+
+    # Get player 1 result
     line = p.readline()
-    o_result = int(line.split(':')[1])
+    try:
+        o_result = int(line.split(':')[1])
+    except:
+        o_result = 0
+
+    # Get player 2 result
     line = p.readline()
-    x_result = int(line.split(':')[1])
+    try:
+        x_result = int(line.split(':')[1])
+    except:
+        x_result = 0
+
     return (o_result, x_result)
 
 def call_proc(args):
@@ -43,10 +58,12 @@ def call_proc(args):
 
 def main():
 
+    # Usage
     if len(sys.argv) != 2:
         print('Usage: python3 {} [filler.player]'.format(sys.argv[0]))
         return
 
+    # Get player binary
     player_binary = sys.argv[1]
     if player_binary.startswith('./') is False:
         player_binary = './' + player_binary
@@ -56,15 +73,21 @@ def main():
         print('Error: The player binary does not exist')
         return
 
+    # Create Pandas DataFrame for data on matches
     main_df = pd.DataFrame(columns = ['Player', 'Opponent', 'Player Score', 'Opponent Score', 'Map'])
 
+    # Thread pool for running matches concurrently
     pool = ThreadPool(mp.cpu_count())
+
+    # Tests will contain all opponent-map combinations
     tests = []
 
+    # Timer for how long it takes to run all matches
     start = time.time()
 
     print(BOLD + 'Running matches... Please wait.' + RESET)
 
+    # Run all matches
     for opponent in opponents:
         opponent_binary = '{}/players/{}'.format(resources_path, opponent)
         for m in maps:
@@ -76,15 +99,17 @@ def main():
     pool.close()
     pool.join()
 
+    # Process results of matches
     for r in results.get():
         p, args = r
         o, x = get_result(p)
-        opponent, m = args
-        round_data = {'Player' : player, 'Opponent' : opponent, 'Player Score' : o, 'Opponent Score' : x, 'Map':m}
+        opponent_name, m = args
+        round_data = {'Player' : player, 'Opponent' : opponent_name, 'Player Score' : o, 'Opponent Score' : x, 'Map':m}
         main_df = pd.concat([main_df, pd.DataFrame([round_data])], ignore_index=True, axis = 0)
 
     end = time.time()
 
+    # Output results
     print('Execution time: {:.3f} seconds'.format(end - start))
     print(BOLD + 'Aggregate results' + RESET)
 
@@ -101,7 +126,6 @@ def main():
     if input() == 'y':
         print(BOLD + 'Full results' + RESET)
         print(main_df)
-    
 
 if __name__ == '__main__':
     main()
