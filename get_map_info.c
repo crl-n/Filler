@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:53:55 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 13:38:17 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/20 14:01:11 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,42 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+static t_bool	is_valid_char(char c)
+{
+	if (c == '.')
+		return (TRUE);
+	if (c == 'x' || c == 'X')
+		return (TRUE);
+	if (c == 'o' || c == 'O')
+		return (TRUE);
+	return (FALSE);
+}
+
 static void	validate_map_info(t_info *info)
 {
-	(void) info;
+	char	*data;
+	int		i;
+	int		count;
+
+	data = info->buffer.data;
+	i = 0;
+	while (i < (int) info->buffer.size - 1)
+	{
+		if (!ft_isdigit(data[i++])
+			|| !ft_isdigit(data[i++]) || !ft_isdigit(data[i++]))
+			die(info, ERROR_MAP_INFO);
+		if (data[i++] != ' ')
+			die(info, ERROR_MAP_INFO);
+		count = 0;
+		while (count < info->ncols)
+		{
+			if (!is_valid_char(data[i]))
+				die(info, ERROR_MAP_INFO);
+			i++;
+			count++;
+		}
+		i++;
+	}
 }
 
 static void	copy_to_map(t_info *info)
