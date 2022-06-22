@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/22 11:17:46 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:53:41 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ typedef struct s_piece
 {
 	int		cols;
 	int		rows;
+	int		row_offset;
+	int		col_offset;
 	char	**data;
 }	t_piece;
 
@@ -95,10 +97,11 @@ void			print_heatmap(t_info *info);
 void			print_map(t_info *info);
 void			push_to_queue(t_info *info, int i, int j);
 t_pos			pop_from_queue(t_info *info);
+void			prune_piece(t_info *info);
 int				queue_has_next(t_info *info);
 void			reset_visited(t_info *info);
 void			reset_queue(t_info *info);
-void			send_command(t_pos *pos);
+void			send_command(t_info *info, t_pos *pos);
 void			skip_line(t_info *info);
 void			solve(t_info *info);
 t_bool			**boolean_array(int n_rows, int n_cols);

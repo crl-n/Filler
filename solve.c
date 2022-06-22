@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:59:27 by cnysten           #+#    #+#             */
-/*   Updated: 2022/06/22 11:20:22 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:50:57 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	solve(t_info *info)
 	pos = (t_pos){0, 0};
 	place_found = FALSE;
 	place_found = search_map(info, &pos, FALSE, MAX_HEATSUM);
-	send_command(&pos);
+	send_command(info, &pos);
 	if (!place_found)
 		die(info, NULL);
 }

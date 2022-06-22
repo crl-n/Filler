@@ -11,7 +11,7 @@ opponents = ['champely.filler',
              'grati.filler',
              'hcao.filler',
              'superjeannot.filler']
-maps = ['map00']
+maps = ['map00', 'map01', 'map02']
 resources_path = './resources'
 BOLD = '\033[1m'
 RESET = '\033[0m'

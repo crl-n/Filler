@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 13:21:37 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:42:13 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	die(t_info *info, char *error_msg)
 	exit(0);
 }
 
-// Note: This function only expects a string array allocated
+// Note: This function expects a string array allocated
 // with a single malloc.
 void	free_string_array(char **array, int rows, int cols)
 {

@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:50:58 by cnysten           #+#    #+#             */
-/*   Updated: 2022/06/22 11:24:07 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/22 17:19:01 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	get_piece_info(t_info *info)
 	info->piece->data = new_string_array(info->piece->rows,
 			info->piece->cols);
 	get_piece_data(info);
+	prune_piece(info);
 	if (!info->piece->data)
 		die(info, ERROR_PIECE_INFO);
 }
