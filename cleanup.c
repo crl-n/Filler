@@ -6,31 +6,13 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/17 23:31:30 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/20 13:21:37 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
 #include <stdlib.h>
-
-void	reset_visited(t_info *info)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < info->nrows)
-	{
-		j = 0;
-		while (j < info->ncols)
-		{
-			info->visited[i][j] = FALSE;
-			j++;
-		}
-		i++;
-	}
-}
 
 void	del(void *node, size_t size)
 {
@@ -39,17 +21,21 @@ void	del(void *node, size_t size)
 		free(node);
 }
 
+void	put_error_msg(char *error_msg)
+{
+	ft_putendl_fd(error_msg, 2);
+	exit(-1);
+}
+
 void	die(t_info *info, char *error_msg)
 {
-	t_piece	*piece;
-
 	if (!info)
 		exit(0);
-	piece = info->piece;
-	if (piece)
+	if (info->piece)
 	{
-		free_string_array(piece->data, piece->rows, piece->cols);
-		free(piece);
+		free_string_array(info->piece->data,
+			info->piece->rows, info->piece->cols);
+		free(info->piece);
 	}
 	if (info->map)
 		free_string_array(info->map, info->nrows, info->ncols);
@@ -57,15 +43,14 @@ void	die(t_info *info, char *error_msg)
 		free_heatmap(info->heatmap, info->nrows, info->ncols);
 	if (info->visited)
 		free(info->visited);
+	if (info->searched)
+		free(info->searched);
 	if (info->queue.data)
 		free(info->queue.data);
+	ft_strdel(&(info->buffer.data));
 	free(info);
 	if (error_msg)
-	{
-		ft_putendl_fd(error_msg, 2);
-		exit(-1);
-	}
-	//system("leaks cnysten.filler > leaks_output");
+		put_error_msg(error_msg);
 	exit(0);
 }
 

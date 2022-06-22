@@ -6,14 +6,14 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/17 23:25:14 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/22 11:17:46 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
 
-# define MAX_HEAT 10000
+# define MAX_HEAT 100000
 # define MAX_HEATSUM 4294967295
 
 # define FALSE 0
@@ -27,6 +27,8 @@
 
 # include "libft.h"
 
+typedef unsigned char	t_bool;
+
 typedef struct s_pos
 {
 	int	x;
@@ -39,6 +41,12 @@ typedef struct s_piece
 	int		rows;
 	char	**data;
 }	t_piece;
+
+typedef struct s_buffer
+{
+	char	*data;
+	size_t	size;
+}	t_buffer;
 
 typedef struct s_queue
 {
@@ -57,22 +65,24 @@ typedef struct s_info
 	int				first_round;
 	char			**map;
 	unsigned int	**heatmap;
-	int				**visited;
+	t_bool			**visited;
 	size_t			visited_size;
+	t_bool			**searched;
 	t_queue			queue;
 	t_piece			*piece;
+	t_buffer		buffer;
 }	t_info;
 
 int				are_valid_ids(t_info *info, int i, int j);
 void			die(t_info *info, char *error_msg);
 int				can_place_piece(t_pos pos,
-					t_info *info, t_piece *piece, int overlap);
+					t_info *info, t_pos ppos, int overlap);
 void			free_heatmap(unsigned int **heatmap, int rows, int cols);
 void			free_string_array(char **array, int rows, int cols);
 void			get_player_number(t_info *info);
 void			get_map_dimensions(t_info *info);
 void			get_map_info(t_info *info);
-void			get_piece_info(t_piece *piece, t_info *info, int i);
+void			get_piece_info(t_info *info);
 int				is_player(char c, int player);
 unsigned int	**new_heatmap(int rows, int cols);
 t_info			*new_info(void);
@@ -90,8 +100,8 @@ void			reset_visited(t_info *info);
 void			reset_queue(t_info *info);
 void			send_command(t_pos *pos);
 void			skip_line(t_info *info);
-void			skip_opponent_info(t_info *info);
-void			solve(t_piece *piece, t_info *info);
+void			solve(t_info *info);
+t_bool			**boolean_array(int n_rows, int n_cols);
 void			update_heatmap(t_info *info);
 
 #endif
