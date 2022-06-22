@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:59:27 by cnysten           #+#    #+#             */
-/*   Updated: 2022/06/20 02:22:50 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/22 11:20:22 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ unsigned int	get_heatsum(int x, int y, t_info *info, t_piece *piece)
 	return (heatsum);
 }
 
-// Try to place the piece so that it is completely within the map.
-
 int	search_map(t_info *info, t_pos *minpos,
 				t_bool place_found, unsigned int min_heatsum)
 {
@@ -54,7 +52,7 @@ int	search_map(t_info *info, t_pos *minpos,
 		pos.x = 0;
 		while (pos.x < info->ncols)
 		{
-			if (can_place_piece(pos, info, info->piece, 0))
+			if (can_place_piece(pos, info, (t_pos){0, 0}, 0))
 			{
 				place_found = TRUE;
 				heatsum = get_heatsum(pos.x, pos.y, info, info->piece);
@@ -70,9 +68,6 @@ int	search_map(t_info *info, t_pos *minpos,
 	}
 	return (place_found);
 }
-
-// Search for a place to put the piece within the map.
-// If none can be found, search outside the map.
 
 void	solve(t_info *info)
 {
