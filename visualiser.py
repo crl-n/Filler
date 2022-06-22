@@ -45,37 +45,6 @@ banner = ['████ ██ ██  ██  ████ ████',
 out = sys.stdout
 speeds = [20.0, 0.75, 0.3, 0.2, 0.15, 0.1, 0.05, 0.04, 0.03, 0.02, 0.005]
 
-def itorgb(i):
-    r = (i & 0xe0) >> 5
-    g = (i & 0x1c) >> 2
-    b = i & 0x3
-    return (r, g, b)
-
-
-def rgbtoi(r, g, b):
-    i = r << 5
-    i += g << 2
-    i += b
-    return i
-
-
-# ISSUE: Too big l-values cause flicker
-# ISSUE: b has to be bigger than a
-def gradient(a, b, l):
-    r1, g1, b1 = itorgb(a)
-    r2, g2, b2 = itorgb(b)
-    sr = r2 - r1 // l
-    sg = g2 - g1 // l
-    sb = b2 - b1 // l
-    colors = []
-    for i in range(l):
-        r = r1 + i * sr
-        g = g1 + i * sg
-        b = b1 + i * sb
-        colors.append(rgbtoi(r, g, b))
-    return colors
-
-
 def get_player_numbers():
     '''Gets the player numbers, returns them as strings.'''
 
@@ -127,13 +96,6 @@ def get_frames(rows):
             continue
         if i <= rows:
             line = line.split(' ')[1]
-            
-            # line = line.replace('.', BLOCK.format(EMPTY_TILE_COLOR))
-            # line = line.replace('X', BLOCK.format(P2_COLOR_1))
-            # line = line.replace('x', BLOCK.format(P2_COLOR_2))
-            # line = line.replace('O', BLOCK.format(P1_COLOR_1))
-            # line = line.replace('o', BLOCK.format(P1_COLOR_2))
-
             frame.append(line.rstrip('\n'))
 
         if i == rows:
@@ -195,25 +157,31 @@ def update_cell(row, col, character):
     out.write(GOTO.format(row = row, col = col) + character)
 
 
+def update_speed(speed):
+    out.write(GOTO.format(row = 9, col = 8) + RESET_BG + str(speed))
+
+
 def update_board(frame, rows, cols):
     '''Modifies the displayed board.'''
+
+    i_offset = 10
 
     for i in range(rows):
         for j in range(cols):
             if frame[i][j] == '.':
-                update_cell(i, j, BLOCK.format(EMPTY_TILE_COLOR))
+                update_cell(i + i_offset, j, BLOCK.format(EMPTY_TILE_COLOR))
                 continue
             if frame[i][j] == 'X':
-                update_cell(i, j, BLOCK.format(P2_COLOR_1))
+                update_cell(i + i_offset, j, BLOCK.format(P2_COLOR_1))
                 continue
             if frame[i][j] == 'x':
-                update_cell(i, j, BLOCK.format(P2_COLOR_2))
+                update_cell(i + i_offset, j, BLOCK.format(P2_COLOR_2))
                 continue
             if frame[i][j] == 'O':
-                update_cell(i, j, BLOCK.format(P1_COLOR_1))
+                update_cell(i + i_offset, j, BLOCK.format(P1_COLOR_1))
                 continue
             if frame[i][j] == 'o':
-                update_cell(i, j, BLOCK.format(P1_COLOR_2))
+                update_cell(i + i_offset, j, BLOCK.format(P1_COLOR_2))
                 continue
 
 
@@ -223,6 +191,7 @@ def print_frames(frames, speed, p1, p2, rows, cols):
     f = open('/dev/tty')
     fd = f.fileno()
     termios_setting_off(termios.ICANON, fd)
+    termios_setting_off(termios.ECHO, fd)
 
     # Create info string. It contains player and speed info.
     info = info_str(speed, p1, p2)
@@ -230,8 +199,6 @@ def print_frames(frames, speed, p1, p2, rows, cols):
     # Print banner and info.
     print_banner()
     out.write(info)
-
-    out.write(CLEAR)
 
     # Print out the first frame.
     for line in frames[0]:
@@ -242,6 +209,7 @@ def print_frames(frames, speed, p1, p2, rows, cols):
         line = line.replace('x', BLOCK.format(P2_COLOR_2))
         line = line.replace('O', BLOCK.format(P1_COLOR_1))
         line = line.replace('o', BLOCK.format(P1_COLOR_2))
+        line = line[:-1] + RESET_BG
 
         out.write(line)
         out.write(NEXTLINE)
@@ -254,10 +222,11 @@ def print_frames(frames, speed, p1, p2, rows, cols):
         # While animating, check for keystrokes.
         if select([f], (), (), 0)[0]:
             keystroke = f.read(1)
-            if keystroke == 'k' and speed < 10:
+            if keystroke == 'k' and speed < 9:
                 speed += 1
             elif keystroke == 'j' and speed > 1:
                 speed -= 1
+            update_speed(speed)
 
         update_board(frame, rows, cols)
         out.flush()
@@ -265,6 +234,7 @@ def print_frames(frames, speed, p1, p2, rows, cols):
 
     # Turn canonical mode back on.
     termios_setting_on(termios.ICANON, fd)
+    termios_setting_on(termios.ECHO, fd)
 
 
 def check_terminal_size(rows, cols):
@@ -290,23 +260,13 @@ def main():
 
     frames = get_frames(rows)
 
-    # out.write(ALTERNATE_SCREEN_BUFFER)
     out.write(HIDE_CURSOR)
-
-    # Fade in banner
-    for color in gradient(0, 255, 20):
-        out.write(FG.format(color))
-        print_banner()
-        out.flush()
-        sleep(0.01)
-        out.write(CLEAR)
 
     print_frames(frames, speed, p1, p2, rows, cols)
 
-    # TODO: declare winner, show turn and result
-
     out.write(SHOW_CURSOR)
-    # out.write(NORMAL_SCREEN_BUFFER)
+    out.write('\n')
+
 
 if __name__ == '__main__':
     if sys.stdin.isatty():
