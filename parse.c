@@ -6,15 +6,13 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 11:55:30 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 14:50:46 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/22 11:22:00 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
 #include "get_next_line.h"
-#include <unistd.h>
-#include <stdlib.h>
 
 void	get_player_number(t_info *info)
 {

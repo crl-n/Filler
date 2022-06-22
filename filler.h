@@ -6,14 +6,14 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 23:43:48 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/22 11:17:46 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLER_H
 # define FILLER_H
 
-# define MAX_HEAT 10000
+# define MAX_HEAT 100000
 # define MAX_HEATSUM 4294967295
 
 # define FALSE 0

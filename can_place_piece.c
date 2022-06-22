@@ -6,13 +6,12 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:01:00 by cnysten           #+#    #+#             */
-/*   Updated: 2022/06/20 23:46:05 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/22 11:19:00 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
-#include <stdlib.h>
 
 static int	is_free_cell(t_info *info, t_pos mpos)
 {
