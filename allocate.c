@@ -6,15 +6,13 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 22:56:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/17 23:31:07 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/22 11:23:20 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include "libft.h"
 #include <stdlib.h>
-
-// 1-dimensional t_pos array used for breadth first search in update_heatmap.
 
 t_pos	*new_pos_array(int nrows, int ncols)
 {

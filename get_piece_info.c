@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:50:58 by cnysten           #+#    #+#             */
-/*   Updated: 2022/06/20 16:28:44 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/22 11:24:07 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ static void	get_piece_data(t_info *info)
 		i++;
 	}
 }
-
-// Frees previous piece data and gets the next piece.
 
 void	get_piece_info(t_info *info)
 {

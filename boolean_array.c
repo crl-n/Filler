@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 00:34:52 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 02:02:06 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/06/22 11:22:36 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "filler.h"
 #include <stdlib.h>
 
-// Allocates a 2D array of t_bool's, i.e. 8-bit unsigned integers.
+// Allocates a 2D array of t_bool's, i.e. unsigned chars.
 
 t_bool	**boolean_array(int n_rows, int n_cols)
 {

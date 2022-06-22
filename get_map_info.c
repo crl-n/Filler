@@ -6,13 +6,12 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 10:53:55 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 14:01:11 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/22 11:21:08 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "filler.h"
 #include <unistd.h>
-#include <stdlib.h>
 
 static t_bool	is_valid_char(char c)
 {
