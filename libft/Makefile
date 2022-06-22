@@ -6,7 +6,7 @@
 #    By: cnysten <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/31 20:50:24 by cnysten           #+#    #+#              #
-#    Updated: 2022/06/16 17:44:37 by cnysten          ###   ########.fr        #
+#    Updated: 2022/06/22 18:08:30 by cnysten          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,7 +91,7 @@ OBJS = $(SRCS:%.c=%.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@gcc -Wall -Wextra -Werror -c $(SRCS) -g
+	@gcc -Wall -Wextra -Werror -c $(SRCS)
 	@ar rc $(NAME) $(OBJS)
 
 clean:
