@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 22:56:59 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/22 11:23:20 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/27 10:58:36 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,6 @@ t_pos	*new_pos_array(int nrows, int ncols)
 		return (NULL);
 	ft_bzero(pos_array, size);
 	return (pos_array);
-}
-
-t_info	*new_info(void)
-{
-	t_info	*info;
-
-	info = (t_info *) malloc(sizeof (t_info));
-	if (!info)
-		return (NULL);
-	ft_bzero(info, sizeof (t_info));
-	info->first_round = 1;
-	return (info);
 }
 
 t_piece	*new_piece(void)
