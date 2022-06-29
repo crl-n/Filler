@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 10:12:58 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/29 10:15:24 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/29 11:38:10 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,21 @@ static void	init_info(t_info *info)
 
 int	main(void)
 {
-	t_info	info;
+	t_info	*info;
 
-	get_player_number(&info);
-	get_map_dimensions(&info);
-	init_info(&info);
+	info = new_info();
+	if (!info)
+		return (0);
+	get_player_number(info);
+	get_map_dimensions(info);
+	init_info(info);
 	while (1)
 	{
-		get_map_info(&info);
-		update_heatmap(&info);
-		get_piece_info(&info);
-		solve(&info);
-		skip_line(&info);
+		get_map_info(info);
+		update_heatmap(info);
+		get_piece_info(info);
+		solve(info);
+		skip_line(info);
 	}
-	system("leaks cnysten.filler >> leaks_out");
 	return (0);
 }

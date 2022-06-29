@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/29 09:58:41 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/20 13:21:37 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void	die(t_info *info, char *error_msg)
 	if (info->queue.data)
 		free(info->queue.data);
 	ft_strdel(&(info->buffer.data));
+	free(info);
 	if (error_msg)
 		put_error_msg(error_msg);
-	//system("leaks cnysten.filler >> leaks_out");
 	exit(0);
 }
 
