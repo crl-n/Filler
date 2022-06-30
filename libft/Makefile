@@ -6,11 +6,13 @@
 #    By: cnysten <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/31 20:50:24 by cnysten           #+#    #+#              #
-#    Updated: 2022/06/16 17:44:37 by cnysten          ###   ########.fr        #
+#    Updated: 2022/06/29 11:17:51 by cnysten          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all, clean, fclean, re
+
+CFLAGS := -Wall -Wextra -Werror
 
 NAME = libft.a
 
@@ -90,8 +92,10 @@ OBJS = $(SRCS:%.c=%.o)
 
 all: $(NAME)
 
+$(OBJS): $(SRCS)
+	@gcc $(CFLAGS) -c $(SRCS)
+
 $(NAME): $(OBJS)
-	@gcc -Wall -Wextra -Werror -c $(SRCS) -g
 	@ar rc $(NAME) $(OBJS)
 
 clean:

@@ -5,3 +5,7 @@ cnysten.filler
 *libft.a
 tags
 leaks_output
+leaks_out
+testfile
+fail*
+out
