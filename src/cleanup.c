@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/27 00:03:11 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/20 13:21:37 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/30 14:30:41 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,9 @@ void	die(t_info *info, char *error_msg)
 {
 	if (!info)
 		exit(0);
-	if (info->piece)
-	{
-		free_string_array(info->piece->data,
-			info->piece->rows, info->piece->cols);
-		free(info->piece);
-	}
+	if (info->piece.data)
+		free_string_array(info->piece.data,
+			info->piece.rows, info->piece.cols);
 	if (info->map)
 		free_string_array(info->map, info->nrows, info->ncols);
 	if (info->heatmap)
@@ -48,7 +45,6 @@ void	die(t_info *info, char *error_msg)
 	if (info->queue.data)
 		free(info->queue.data);
 	ft_strdel(&(info->buffer.data));
-	free(info);
 	if (error_msg)
 		put_error_msg(error_msg);
 	exit(0);

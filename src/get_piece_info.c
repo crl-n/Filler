@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:50:58 by cnysten           #+#    #+#             */
-/*   Updated: 2022/06/29 10:14:03 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/30 14:30:56 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static void	get_piece_dimensions(t_info *info)
 	if (gnl_ret < 1)
 		die(info, ERROR_PIECE_INFO);
 	validate_piece_dimensions(info, line);
-	info->piece->rows = ft_atoi(ft_strchr(line, ' ') + 1);
-	info->piece->cols = ft_atoi(ft_strrchr(line, ' ') + 1);
+	info->piece.rows = ft_atoi(ft_strchr(line, ' ') + 1);
+	info->piece.cols = ft_atoi(ft_strrchr(line, ' ') + 1);
 	ft_strdel(&line);
 }
 
@@ -62,12 +62,12 @@ static void	get_piece_data(t_info *info)
 
 	line = NULL;
 	i = 0;
-	while (i < info->piece->rows)
+	while (i < info->piece.rows)
 	{
 		gnl_ret = get_next_line(0, &line);
 		if (gnl_ret < 1)
 			die(info, ERROR_PIECE_INFO);
-		ft_strncpy(info->piece->data[i], line, info->piece->cols);
+		ft_strncpy(info->piece.data[i], line, info->piece.cols);
 		ft_strdel(&line);
 		i++;
 	}
@@ -75,13 +75,13 @@ static void	get_piece_data(t_info *info)
 
 void	get_piece_info(t_info *info)
 {
-	free_string_array(info->piece->data, info->piece->rows,
-		info->piece->cols);
-	info->piece->data = NULL;
+	free_string_array(info->piece.data, info->piece.rows,
+		info->piece.cols);
+	info->piece.data = NULL;
 	get_piece_dimensions(info);
-	info->piece->data = new_string_array(info->piece->rows,
-			info->piece->cols);
+	info->piece.data = new_string_array(info->piece.rows,
+			info->piece.cols);
 	get_piece_data(info);
-	if (!info->piece->data)
+	if (!info->piece.data)
 		die(info, ERROR_PIECE_INFO);
 }

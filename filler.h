@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/26 21:45:38 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/06/22 11:17:46 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/30 14:27:48 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_info
 	size_t			visited_size;
 	t_bool			**searched;
 	t_queue			queue;
-	t_piece			*piece;
+	t_piece			piece;
 	t_buffer		buffer;
 }	t_info;
 

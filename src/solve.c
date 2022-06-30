@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 18:59:27 by cnysten           #+#    #+#             */
-/*   Updated: 2022/06/22 11:20:22 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/30 14:48:16 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include <stdlib.h>
 
-unsigned int	get_heatsum(int x, int y, t_info *info, t_piece *piece)
+static unsigned int	get_heatsum(int x, int y, t_info *info)
 {
 	int				i;
 	int				j;
@@ -22,25 +22,25 @@ unsigned int	get_heatsum(int x, int y, t_info *info, t_piece *piece)
 
 	heatsum = 0;
 	i = 0;
-	while (i < piece->rows && y < info->nrows)
+	while (i < info->piece.rows && y < info->nrows)
 	{
 		j = 0;
-		while (j < piece->cols)
+		while (j < info->piece.cols)
 		{
 			if (x >= 0 && x < info->ncols && y >= 0
-				&& piece->data[i][j] == '*')
+				&& info->piece.data[i][j] == '*')
 				heatsum += info->heatmap[y][x];
 			x++;
 			j++;
 		}
-		x -= piece->cols;
+		x -= info->piece.cols;
 		y++;
 		i++;
 	}
 	return (heatsum);
 }
 
-int	search_map(t_info *info, t_pos *minpos,
+static int	search_map(t_info *info, t_pos *minpos,
 				t_bool place_found, unsigned int min_heatsum)
 {
 	unsigned int	heatsum;
@@ -55,7 +55,7 @@ int	search_map(t_info *info, t_pos *minpos,
 			if (can_place_piece(pos, info, (t_pos){0, 0}, 0))
 			{
 				place_found = TRUE;
-				heatsum = get_heatsum(pos.x, pos.y, info, info->piece);
+				heatsum = get_heatsum(pos.x, pos.y, info);
 				if (heatsum < min_heatsum)
 				{
 					min_heatsum = heatsum;

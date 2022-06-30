@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 19:01:00 by cnysten           #+#    #+#             */
-/*   Updated: 2022/06/22 11:19:00 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/06/30 14:49:18 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ static int	is_overlapping(t_info *info, t_pos mpos)
 
 int	can_place_piece(t_pos mpos, t_info *info, t_pos ppos, int overlap)
 {
-	while (ppos.y < info->piece->rows)
+	while (ppos.y < info->piece.rows)
 	{
 		ppos.x = 0;
-		while (ppos.x < info->piece->cols)
+		while (ppos.x < info->piece.cols)
 		{
-			if (info->piece->data[ppos.y][ppos.x] == '*')
+			if (info->piece.data[ppos.y][ppos.x] == '*')
 			{
 				if (!is_free_cell(info, mpos))
 					return (0);
@@ -61,7 +61,7 @@ int	can_place_piece(t_pos mpos, t_info *info, t_pos ppos, int overlap)
 			mpos.x++;
 			ppos.x++;
 		}
-		mpos.x -= info->piece->cols;
+		mpos.x -= info->piece.cols;
 		mpos.y++;
 		ppos.y++;
 	}
